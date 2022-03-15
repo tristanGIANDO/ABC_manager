@@ -1,3 +1,8 @@
+# Created by Tristan GIANDORIGGIO
+# +33651839815
+# giando.tristan@gmail.com
+
+
 import maya.cmds as cmds
 import os
 import maya.mel as mel
@@ -60,7 +65,6 @@ def exportBakeCamera(*args):
         mel.eval('file -force -options "v=0;" -typ "mayaAscii" -pr -es "' + path2 + '/' + name + '.ma";')
         print ( command )
        
-        
 ###### EXPORT LINDSEY ########################################################################
 def exportLindsey(*args):
     
@@ -225,7 +229,6 @@ if cmds.window("giando", exists=True):
 window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.1", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
-
 diUi["lays"]["global"] = cmds.frameLayout(l="EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.4,0.4), cll=True)
 diUi["lays"]["exportGlobal"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80), (2,200)], p=diUi["lays"]["global"])
@@ -239,8 +242,6 @@ cmds.text( label= "    ")
 #cmds.optionMenu( label='Shot' )
 #for sh in shotList:
 #    abc_name_text = cmds.menuItem(sh)
-
-
 
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
@@ -263,7 +264,6 @@ tent_space_text = cmds.textField(tx="TENT01")
 cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.05, 0.05], c= exportTentacle )
 cmds.text( label= " ")
 cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
-
 
 
 
