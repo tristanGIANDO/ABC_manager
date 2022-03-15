@@ -214,6 +214,39 @@ def exportTentacle(*args):
     abc_geo = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
     mel.eval(abc_geo)
 
+###### EXPORT AND BAKE CAMERA ########################################################################
+def exportAnything(*args):
+    # QUERY FILE PATH    
+
+    scene_name = cmds.file( q =1, sn = 1)
+    path_to_scene = os.path.dirname(scene_name)
+    path = os.path.join(path_to_scene)
+    # QUERY FILE NAME
+    name = cmds.textField(any_space_text, query = True, text = True) 
+    shot_name = cmds.textField(abc_name_text, query = True, text = True)   
+    # START FRAME END FRAME
+    start  = int(cmds.playbackOptions( q=True,min=True ))
+    end = int(cmds.playbackOptions( q=True,max=True ))
+        
+    sel = cmds.ls(sl=True)
+    
+    
+    #REPATH TO CAMERA
+    if "scenes" in path:
+        path_spl = path.split("scenes")
+        newpath = path_spl[0] + "cache"
+        path2 = newpath.replace("\\", "/")
+        
+    else:
+        path2 = path.replace("\\", "/")
+    
+    geo = []
+    
+    #COMMAND
+    for x in sel:
+        #EXPORT
+        command = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + shot_name + '_' + name + '_' + suffix + '.abc' + ' ";'
+        mel.eval(command)
 
 #############################
 ## USER INTERFACE SETTINGS ##
@@ -229,19 +262,11 @@ if cmds.window("giando", exists=True):
 window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.1", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
-diUi["lays"]["global"] = cmds.frameLayout(l="EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.4,0.4), cll=True)
-diUi["lays"]["exportGlobal"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
+diUi["lays"]["global"] = cmds.frameLayout(l="EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.5,0.5), cll=True)
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80), (2,200)], p=diUi["lays"]["global"])
 
 ###########################################################
 
-###### EXPORT GLOBAL
-cmds.setParent (diUi["lays"]["exportGlobal"])
-
-cmds.text( label= "    ")
-#cmds.optionMenu( label='Shot' )
-#for sh in shotList:
-#    abc_name_text = cmds.menuItem(sh)
 
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
@@ -252,18 +277,20 @@ cmds.separator()
 cmds.separator()
 cmds.text( label= "NameSpace")
 cmds.text( label= "Functions")
-cmds.text( label= " ")
-cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.4, 0.4], c= exportBakeCamera )
+
 lindsey_space_text = cmds.textField(tx="CHAR01")
-cmds.button ( label = "Export LINDSEY", backgroundColor=[0.0, 0.3, 0.3], c= exportLindsey )
+cmds.button ( label = "Export LINDSEY", backgroundColor=[0.0, 0.5, 0.5], c= exportLindsey )
 bruce_space_text = cmds.textField(tx="CHAR02")
-cmds.button ( label = "Export BRUCE", backgroundColor=[0.0, 0.2, 0.2], c= exportBruce )
+cmds.button ( label = "Export BRUCE", backgroundColor=[0.0, 0.4, 0.4], c= exportBruce )
 willis_space_text = cmds.textField(tx="CHAR03")
-cmds.button ( label = "Export WILLIS", backgroundColor=[0.0, 0.1, 0.1], c= exportWillis )
+cmds.button ( label = "Export WILLIS", backgroundColor=[0.0, 0.3, 0.3], c= exportWillis )
 tent_space_text = cmds.textField(tx="TENT01")
-cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.05, 0.05], c= exportTentacle )
+cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.2, 0.2], c= exportTentacle )
+any_space_text = cmds.textField(tx="Any")
+cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.1, 0.1], c= exportAnything )
+
 cmds.text( label= " ")
-cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
+cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
 
 
 
