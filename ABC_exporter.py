@@ -271,7 +271,7 @@ diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80)
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
 
-cmds.text( label= "SHOT NAME")
+cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
 abc_name_text = cmds.textField(tx="030")
 cmds.separator()
 cmds.separator()
