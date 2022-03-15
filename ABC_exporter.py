@@ -289,7 +289,7 @@ cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.2, 0.2], c= exp
 any_space_text = cmds.textField(tx="Any")
 cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.1, 0.1], c= exportAnything )
 
-cmds.text( label= " ")
+cmds.text( label= "Select cam if >>")
 cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
 
 
