@@ -60,9 +60,9 @@ def exportBakeCamera(*args):
             cmds.currentTime(i)
             cmds.setKeyframe(sel)
         #EXPORT
-        command = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + name + '.abc' + ' ";'
+        command = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + 'CAM_' + name + '.abc' + ' ";'
         mel.eval(command)
-        mel.eval('file -force -options "v=0;" -typ "mayaAscii" -pr -es "' + path2 + '/' + name + '.ma";')
+        mel.eval('file -force -options "v=0;" -typ "mayaAscii" -pr -es "' + path2 + '/' + 'CAM_' + name + '.ma";')
         print ( command )
        
 ###### EXPORT LINDSEY ########################################################################
