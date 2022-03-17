@@ -110,6 +110,7 @@ def exportBruce(*args):
     char_geo = "Bruce_P_geoHi:Bruce_MESH"
     char_head = "Bruce_P_geoHi:Bruce_head"
     char_arms = "Bruce_P_geoHi:Bruce_arms"
+    char_light = "CTRL_Light"
 
     # QUERY FILE PATH    
     scene_name = cmds.file( q =1, sn = 1)
@@ -122,7 +123,7 @@ def exportBruce(*args):
     
     # START FRAME END FRAME
     start  = int(cmds.playbackOptions( q=True,min=True ))
-    end = int(cmds.playbackOptions( q=True,max=True ))
+    end = int(cmds.playbackOptions( q=True,max=True )) 
     
     
     #REPATH TO CAMERA
@@ -135,14 +136,21 @@ def exportBruce(*args):
         path2 = path.replace("\\", "/")
     
     geo = []
+
+    attributes=["light_intensity", "ConeAngle"]
+    attrString=""
+    for each in attributes:
+        attrString += " -attr "+ each 
     
     #EXPORT
     abc_geo = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
-    abc_head = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+    abc_head = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + attrString + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
     abc_arms = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2 + '/' + name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
+    abc_light = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + name + '_' + char_space + '_LIGHT' + '.abc' + ' ";'
     mel.eval(abc_geo)
     mel.eval(abc_head)
     mel.eval(abc_arms)
+    mel.eval(abc_light)
 
 ###### EXPORT WILLIS ########################################################################
 def exportWillis(*args):
