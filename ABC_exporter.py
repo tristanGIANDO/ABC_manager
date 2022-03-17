@@ -235,6 +235,8 @@ def exportAnything(*args):
     # START FRAME END FRAME
     start  = int(cmds.playbackOptions( q=True,min=True ))
     end = int(cmds.playbackOptions( q=True,max=True ))
+    current = int(cmds.currentTime(q=True))
+    print (current)
         
     sel = cmds.ls(sl=True)
     
@@ -281,6 +283,8 @@ cmds.setParent (diUi["lays"]["exportButtons"])
 
 cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
 abc_name_text = cmds.textField(tx="030")
+cmds.text( label= "  ")
+time_slider_UI = cmds.checkBox( label = "Export Current Frame")
 cmds.separator()
 cmds.separator()
 cmds.text( label= "NameSpace")
