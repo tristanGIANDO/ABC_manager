@@ -2,15 +2,11 @@
 # +33651839815
 # giando.tristan@gmail.com
 
-
 import maya.cmds as cmds
 import os
 import maya.mel as mel
-from os import listdir
-from os.path import isfile, join
        
 suffix = "ANIM"
-
 
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
@@ -41,15 +37,22 @@ def exportBakeCamera(*args):
     
     #COMMAND
     for x in sel:
-        #BAKE
-        for i in range(start,end):
-            cmds.currentTime(i)
-            cmds.setKeyframe(sel)
-        #EXPORT
-        command = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + 'CAM_' + name + '.abc' + ' ";'
-        mel.eval(command)
-        mel.eval('file -force -options "v=0;" -typ "mayaAscii" -pr -es "' + path2 + '/' + 'CAM_' + name + '.ma";')
-        print ( command )
+        if cmds.checkBox(current_frame_UI, q = True, v = True):
+            #EXPORT
+            command = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + 'CAM_' + name + '.abc' + ' ";'
+            mel.eval(command)
+            mel.eval('file -force -options "v=0;" -typ "mayaAscii" -pr -es "' + path2 + '/' + 'CAM_' + name + '.ma";')
+            print ( " CAMERA is exported >> current frame ") 
+        else:
+            #BAKE
+            for i in range(start,end):
+                cmds.currentTime(i)
+                cmds.setKeyframe(sel)
+            #EXPORT
+            command = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + 'CAM_' + name + '.abc' + ' ";'
+            mel.eval(command)
+            mel.eval('file -force -options "v=0;" -typ "mayaAscii" -pr -es "' + path2 + '/' + 'CAM_' + name + '.ma";')
+            print ( " CAMERA is exported >> Time Slider ")
        
 ###### EXPORT LINDSEY ########################################################################
 def exportLindsey(*args):
@@ -75,11 +78,17 @@ def exportLindsey(*args):
         abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
         for abc in [abc_geo, abc_head]:
             mel.eval(abc)
+        print ( " I'm exporting the current frame ! ")
+        print ( " Lindsey is exported >> MESH, HEAD")
+        print ( " #FightForLindseyBlonde")
     else:
         abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
         abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
         for abc in [abc_geo, abc_head]:
             mel.eval(abc)
+        print ( " I'm exporting the Time Slider ! ")
+        print ( " Lindsey is exported >> MESH, HEAD")
+        print ( " #FightForLindseyBlonde")
 
 ###### EXPORT BRUCE ########################################################################
 def exportBruce(*args):
@@ -116,6 +125,8 @@ def exportBruce(*args):
         abc_light = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + name + '_' + char_space + '_LIGHT' + '.abc' + ' ";'
         for abc in [abc_geo, abc_head, abc_arms, abc_light]:
             mel.eval(abc)
+        print ( " I'm exporting the current frame ! ")
+        print ( " Bruce is exported >> MESH, HEAD, ARMS, LIGHT")
 
     else:
         abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
@@ -124,6 +135,8 @@ def exportBruce(*args):
         abc_light = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + name + '_' + char_space + '_LIGHT' + '.abc' + ' ";'
         for abc in [abc_geo, abc_head, abc_arms, abc_light]:
             mel.eval(abc)
+        print ( " I'm exporting the Time Slider ! ")
+        print ( " Bruce is exported >> MESH, HEAD, ARMS, LIGHT")
 
 ###### EXPORT WILLIS ########################################################################
 def exportWillis(*args):
@@ -150,6 +163,7 @@ def exportWillis(*args):
     else:
         abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
         mel.eval(abc_geo)
+        print ( "Time Slider exported >> " + name + '_' + char_space + "_" + suffix + ".abc")
 
 ###### EXPORT WILLIS ########################################################################
 def exportTentacle(*args):
@@ -225,7 +239,6 @@ diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80)
 
 ###########################################################
 
-
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
 
@@ -248,11 +261,7 @@ tent_space_text = cmds.textField(tx="TENT01")
 cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.2, 0.2], c= exportTentacle )
 any_space_text = cmds.textField(tx="Any")
 cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.1, 0.1], c= exportAnything )
-
 cmds.text( label= "Select cam if >>")
 cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
-
-
-
 
 cmds.showWindow (diUi["window"]["main"])
