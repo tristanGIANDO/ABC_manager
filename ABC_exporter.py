@@ -254,9 +254,14 @@ def exportAnything(*args):
     
     #COMMAND
     for x in sel:
-        #EXPORT
-        command = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + shot_name + '_' + name + '_' + suffix + '.abc' + ' ";'
-        mel.eval(command)
+        if cmds.checkBox(time_slider_UI, q = True, v = True):
+            #EXPORT CURRENT FRAME
+            command = 'AbcExport -j "-frameRange ' + str(int(current)) + ' ' + str(int(current)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + shot_name + '_' + name + '_' + suffix + '.abc' + ' ";'
+            mel.eval(command)
+        else:
+            #EXPORT TIME SLIDER
+            command = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + shot_name + '_' + name + '_' + suffix + '.abc' + ' ";'
+            mel.eval(command)
 
 #############################
 ## USER INTERFACE SETTINGS ##
