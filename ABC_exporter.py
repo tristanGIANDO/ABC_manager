@@ -264,8 +264,9 @@ def import_abc(*args):
             
                 cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
                 cmds.parent(disk_light, "CHAR02:CTRL_Light")
-                
 
+                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
+                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
 
                 print ( "done ")
                 #mel.eval(command)
