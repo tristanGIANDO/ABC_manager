@@ -232,7 +232,7 @@ diUi["window"] = {}
 
 if cmds.window("giando", exists=True):
 	cmds.deleteUI("giando")
-window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.2", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
+window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Manager_0.3", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
 diUi["lays"]["form"] = cmds.formLayout()
