@@ -256,8 +256,8 @@ def import_abc(*args):
         if "Bruce" in character:
             print ( "c'est parti")
             try :
-                #cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
-                #cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
+                cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+                cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
                 cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
 
                 disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
