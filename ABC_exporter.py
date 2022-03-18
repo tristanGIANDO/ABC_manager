@@ -8,7 +8,6 @@ import maya.mel as mel
        
 suffix = "ANIM"
 
-
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
 path_to_scene = os.path.dirname(scene_name)
@@ -21,6 +20,13 @@ current = int(cmds.currentTime(q=True))
 
 time_slider = str(int(start)) + ' ' + str(int(end))
 current_frame = str(int(current)) + ' ' + str(int(current))
+
+# PATH TO LOOKDEV
+server = os.path.join(r"\\gandalf/3D4_21_22",
+                        "instinct")
+bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
+bruce_lookdev_path = os.path.join( server, bruce_lookdev)
+print ( bruce_lookdev_path )
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -221,13 +227,21 @@ def exportAnything(*args):
             mel.eval(command)
             print ( "Time Slider exported >> " + shot_name + "_" + name + "_" + suffix + ".abc")
 
+###### IMPORT AND MERGE ABC ###############################################################################
 def import_abc(*args):
     
     character = cmds.optionMenu (import_menu, q=True, v=True)
-    print ( character )
 
     if "Lindsey" in character:
         print ( "c'est parti")
+
+    if "Bruce" in character:
+        print ( "c'est parti")
+        try :
+            #cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
+            cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
+        except :
+            print ("no no no no")
 
 #############################
 ## USER INTERFACE SETTINGS ##
