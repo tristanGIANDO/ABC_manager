@@ -220,6 +220,7 @@ def exportAnything(*args):
             mel.eval(command)
             print ( "Time Slider exported >> " + shot_name + "_" + name + "_" + suffix + ".abc")
 
+
 #############################
 ## USER INTERFACE SETTINGS ##
 #############################
@@ -234,9 +235,16 @@ if cmds.window("giando", exists=True):
 window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.2", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
-diUi["lays"]["global"] = cmds.frameLayout(l="EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.5,0.5), cll=True)
+diUi["lays"]["form"] = cmds.formLayout()
+diUi["lays"]["tabs"] = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
+cmds.formLayout( diUi["lays"]["form"], edit=True, attachForm=((diUi["lays"]["tabs"], 'top', 0), (diUi["lays"]["tabs"], 'left', 0), (diUi["lays"]["tabs"], 'bottom', 0), (diUi["lays"]["tabs"], 'right', 0)) )
+# TAB EXPORT
+diUi["lays"]["global"] = cmds.frameLayout("EXPORT", p=diUi["lays"]["tabs"], bgc=(0.0,0.5,0.5))
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80), (2,200)], p=diUi["lays"]["global"])
 diUi["lays"]["text"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
+# TAB IMPORT
+diUi["lays"]["global"] = cmds.frameLayout("IMPORT", p=diUi["lays"]["tabs"], bgc=(0.0,0.5,0.5))
+diUi["lays"]["import"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
 
 ###########################################################
 
@@ -270,5 +278,13 @@ cmds.setParent (diUi["lays"]["text"])
 cmds.text( label= "CHAR EXPORT >> '05_shot/xx/maya/cache' ")
 cmds.text( label= "CAM EXPORT >> '05_shot/xx/camera' ")
 cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
+
+#############################################################
+cmds.setParent (diUi["lays"]["import"])
+cmds.optionMenu( label= "Choose lookdev" )
+bruce_lookdev = cmds.menuItem( label= "Bruce_P_lookdev" )
+bruce_out_lookdev = cmds.menuItem( label= "Bruce_OUT_P_lookdev" )
+lindsey_lookdev = cmds.menuItem( label= "Lindsey_P_lookdev" )
+cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4])
 
 cmds.showWindow (diUi["window"]["main"])
