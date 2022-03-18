@@ -26,10 +26,8 @@ current_frame = str(int(current)) + ' ' + str(int(current))
 server = os.path.join(r"\\gandalf/3D4_21_22",
                         "instinct")
 bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
-cache = os.path.join("cache.abc")
 bruce_lookdev_path = os.path.join( server,
                         bruce_lookdev)
-cache_path = os.path.join( server, cache )
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -129,7 +127,7 @@ def exportBruce(*args):
     
     #EXPORT
     if cmds.checkBox(current_frame_UI, q = True, v = True):
-        abc_geo = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
+        abc_geo = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
         abc_head = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
         abc_arms = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2 + '/' + name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
         abc_light = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + name + '_' + char_space + '_LIGHT' + '.abc' + ' ";'
@@ -217,10 +215,10 @@ def exportAnything(*args):
     else:
         path2 = path.replace("\\", "/")
 
-    if ".ma" in scene_name:
-        print ( "yo" )
-        split = path.split("_A_*")
-        print ( split )
+    # if ".ma" in scene_name:
+    #     print ( "yo" )
+    #     split = path.split("_A_*")
+    #     print ( split )
     
     #COMMAND
     for x in sel:
@@ -239,19 +237,43 @@ def exportAnything(*args):
 def import_abc(*args):
     
     character = cmds.optionMenu (import_menu, q=True, v=True)
+    shot_name = cmds.textField(merge_shot_UI, query = True, text = True)  
+    abc_Bruce = str(shot_name + "_CHAR02_HEAD.abc")
+    abc_Bruce_light = str(shot_name + "_CHAR02_LIGHT.abc")
 
-    if "Lindsey" in character:
-        print ( "c'est parti")
+    #REPATH TO CACHE
+    if "scenes" in path:
+        path_spl = path.split("scenes")
+        path_to_cache = path_spl[0] + "cache"
+        path_to_bruce = os.path.join( path_to_cache, abc_Bruce)
+        path_to_light = os.path.join( path_to_cache, abc_Bruce_light)
 
-    if "Bruce" in character:
-        print ( "c'est parti")
-        try :
-            cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
-            #command = "AbcImport -mode import -connect "+ '"'+ child +'" "' + path2+"/"+files[idx]+'";'
-            cmds.AbcImport(str(cache_path), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH")
-            #mel.eval(command)
-        except :
-            print ("no no no no")
+        print ( path_to_cache )   
+    
+        if "Lindsey" in character:
+            print ( "c'est parti")
+
+        if "Bruce" in character:
+            print ( "c'est parti")
+            try :
+                #cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+                #cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
+                cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
+
+                disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
+            
+                cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
+                cmds.parent(disk_light, "CHAR02:CTRL_Light")
+                
+
+
+                print ( "done ")
+                #mel.eval(command)
+            except :
+                print ("no no no no")
+
+    else:
+        path2 = path.replace("\\", "/")
 
 #############################
 ## USER INTERFACE SETTINGS ##
@@ -313,6 +335,8 @@ cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
 
 #############################################################
 cmds.setParent (diUi["lays"]["import"])
+cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
+merge_shot_UI = cmds.textField(tx="075")
 import_menu = cmds.optionMenu( label= "Choose lookdev" )
 bruce_lookdev_UI = cmds.menuItem( label= "Bruce_P_lookdev" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "Bruce_OUT_P_lookdev" )
