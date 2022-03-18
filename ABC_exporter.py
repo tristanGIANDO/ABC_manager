@@ -8,6 +8,7 @@ import maya.mel as mel
        
 suffix = "ANIM"
 
+
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
 path_to_scene = os.path.dirname(scene_name)
@@ -220,6 +221,13 @@ def exportAnything(*args):
             mel.eval(command)
             print ( "Time Slider exported >> " + shot_name + "_" + name + "_" + suffix + ".abc")
 
+def import_abc(*args):
+    
+    character = cmds.optionMenu (import_menu, q=True, v=True)
+    print ( character )
+
+    if "Lindsey" in character:
+        print ( "c'est parti")
 
 #############################
 ## USER INTERFACE SETTINGS ##
@@ -281,10 +289,10 @@ cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
 
 #############################################################
 cmds.setParent (diUi["lays"]["import"])
-cmds.optionMenu( label= "Choose lookdev" )
-bruce_lookdev = cmds.menuItem( label= "Bruce_P_lookdev" )
-bruce_out_lookdev = cmds.menuItem( label= "Bruce_OUT_P_lookdev" )
-lindsey_lookdev = cmds.menuItem( label= "Lindsey_P_lookdev" )
-cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4])
+import_menu = cmds.optionMenu( label= "Choose lookdev" )
+bruce_lookdev_UI = cmds.menuItem( label= "Bruce_P_lookdev" )
+bruce_out_lookdev_UI = cmds.menuItem( label= "Bruce_OUT_P_lookdev" )
+lindsey_lookdev_UI = cmds.menuItem( label= "Lindsey_P_lookdev" )
+cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
 
 cmds.showWindow (diUi["window"]["main"])
