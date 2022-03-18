@@ -10,6 +10,7 @@ suffix = "ANIM"
 
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
+print (scene_name)
 path_to_scene = os.path.dirname(scene_name)
 path = os.path.join(path_to_scene)
 
@@ -29,7 +30,6 @@ cache = os.path.join("cache.abc")
 bruce_lookdev_path = os.path.join( server,
                         bruce_lookdev)
 cache_path = os.path.join( server, cache )
-print ( cache_path )
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -209,13 +209,18 @@ def exportAnything(*args):
     shot_name = cmds.textField(abc_name_text, query = True, text = True)      
     sel = cmds.ls(sl=True)
     
-    #REPATH TO CAMERA
+    #REPATH TO CACHE
     if "scenes" in path:
         path_spl = path.split("scenes")
         newpath = path_spl[0] + "cache"
         path2 = newpath.replace("\\", "/")   
     else:
         path2 = path.replace("\\", "/")
+
+    if ".ma" in scene_name:
+        print ( "yo" )
+        split = path.split("_A_*")
+        print ( split )
     
     #COMMAND
     for x in sel:
@@ -241,9 +246,9 @@ def import_abc(*args):
     if "Bruce" in character:
         print ( "c'est parti")
         try :
-            #cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
+            cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
             #command = "AbcImport -mode import -connect "+ '"'+ child +'" "' + path2+"/"+files[idx]+'";'
-            cmds.AbcImport(str(cache_path), mode='import')
+            cmds.AbcImport(str(cache_path), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH")
             #mel.eval(command)
         except :
             print ("no no no no")
@@ -313,5 +318,6 @@ bruce_lookdev_UI = cmds.menuItem( label= "Bruce_P_lookdev" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "Bruce_OUT_P_lookdev" )
 lindsey_lookdev_UI = cmds.menuItem( label= "Lindsey_P_lookdev" )
 cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
+cmds.button ( label = "Reboot ??")
 
 cmds.showWindow (diUi["window"]["main"])
