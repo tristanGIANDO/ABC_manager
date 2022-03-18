@@ -8,23 +8,18 @@ import os
 import maya.mel as mel
 from os import listdir
 from os.path import isfile, join
-
-shotList = ["010",
-            "020_010",
-            "030",
-            "040",
-            "050",
-            "070",
-            "075",
-            "080",
-            "085",
-            "090",
-            "100",
-            "110"]
-            
+       
 suffix = "ANIM"
 
+# CREATE EXPORT PATH
+scene_name = cmds.file( q =1, sn = 1)
+path_to_scene = os.path.dirname(scene_name)
+path = os.path.join(path_to_scene)
 
+# START FRAME END FRAME
+start  = int(cmds.playbackOptions( q=True,min=True ))
+end = int(cmds.playbackOptions( q=True,max=True ))
+current = int(cmds.currentTime(q=True))
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -224,33 +219,18 @@ def exportTentacle(*args):
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportAnything(*args):
-    # QUERY FILE PATH    
-
-    scene_name = cmds.file( q =1, sn = 1)
-    path_to_scene = os.path.dirname(scene_name)
-    path = os.path.join(path_to_scene)
     # QUERY FILE NAME
     name = cmds.textField(any_space_text, query = True, text = True) 
-    shot_name = cmds.textField(abc_name_text, query = True, text = True)   
-    # START FRAME END FRAME
-    start  = int(cmds.playbackOptions( q=True,min=True ))
-    end = int(cmds.playbackOptions( q=True,max=True ))
-    current = int(cmds.currentTime(q=True))
-    print (current)
-        
+    shot_name = cmds.textField(abc_name_text, query = True, text = True)      
     sel = cmds.ls(sl=True)
-    
     
     #REPATH TO CAMERA
     if "scenes" in path:
         path_spl = path.split("scenes")
         newpath = path_spl[0] + "cache"
-        path2 = newpath.replace("\\", "/")
-        
+        path2 = newpath.replace("\\", "/")   
     else:
         path2 = path.replace("\\", "/")
-    
-    geo = []
     
     #COMMAND
     for x in sel:
@@ -258,10 +238,12 @@ def exportAnything(*args):
             #EXPORT CURRENT FRAME
             command = 'AbcExport -j "-frameRange ' + str(int(current)) + ' ' + str(int(current)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + shot_name + '_' + name + '_' + suffix + '.abc' + ' ";'
             mel.eval(command)
+            print ( "Current frame exported >> " + shot_name + "_" + name + "_" + suffix + ".abc")
         else:
             #EXPORT TIME SLIDER
             command = 'AbcExport -j "-frameRange ' + str(int(start)) + ' ' + str(int(end)) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + shot_name + '_' + name + '_' + suffix + '.abc' + ' ";'
             mel.eval(command)
+            print ( "Time Slider exported >> " + shot_name + "_" + name + "_" + suffix + ".abc")
 
 #############################
 ## USER INTERFACE SETTINGS ##
@@ -274,7 +256,7 @@ diUi["window"] = {}
 
 if cmds.window("giando", exists=True):
 	cmds.deleteUI("giando")
-window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.1", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
+window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.2", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
 diUi["lays"]["global"] = cmds.frameLayout(l="EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.5,0.5), cll=True)
