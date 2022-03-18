@@ -236,6 +236,7 @@ window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Exporter_0.2",
 ###### LAYERS HIERARCHY
 diUi["lays"]["global"] = cmds.frameLayout(l="EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.5,0.5), cll=True)
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80), (2,200)], p=diUi["lays"]["global"])
+diUi["lays"]["text"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
 
 ###########################################################
 
@@ -263,5 +264,11 @@ any_space_text = cmds.textField(tx="Any")
 cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.1, 0.1], c= exportAnything )
 cmds.text( label= "Select cam if >>")
 cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
+
+###### TEXT
+cmds.setParent (diUi["lays"]["text"])
+cmds.text( label= "CHAR EXPORT >> '05_shot/xx/maya/cache' ")
+cmds.text( label= "CAM EXPORT >> '05_shot/xx/camera' ")
+cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
 
 cmds.showWindow (diUi["window"]["main"])
