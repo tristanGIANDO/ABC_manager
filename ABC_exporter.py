@@ -25,8 +25,11 @@ current_frame = str(int(current)) + ' ' + str(int(current))
 server = os.path.join(r"\\gandalf/3D4_21_22",
                         "instinct")
 bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
-bruce_lookdev_path = os.path.join( server, bruce_lookdev)
-print ( bruce_lookdev_path )
+cache = os.path.join("cache.abc")
+bruce_lookdev_path = os.path.join( server,
+                        bruce_lookdev)
+cache_path = os.path.join( server, cache )
+print ( cache_path )
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -239,7 +242,9 @@ def import_abc(*args):
         print ( "c'est parti")
         try :
             #cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
-            cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02")
+            #command = "AbcImport -mode import -connect "+ '"'+ child +'" "' + path2+"/"+files[idx]+'";'
+            cmds.AbcImport(str(cache_path), mode='import')
+            #mel.eval(command)
         except :
             print ("no no no no")
 
