@@ -238,7 +238,7 @@ def import_abc(*args):
     
     character = cmds.optionMenu (import_menu, q=True, v=True)
     shot_name = cmds.textField(merge_shot_UI, query = True, text = True)  
-    abc_Bruce = str(shot_name + "_CHAR02_HEAD.abc")
+    abc_Bruce = str(shot_name + "_CHAR02_ANIM.abc")
     abc_Bruce_light = str(shot_name + "_CHAR02_LIGHT.abc")
 
     #REPATH TO CACHE
