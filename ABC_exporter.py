@@ -280,6 +280,7 @@ def import_abc(*args):
     abc_Bruce = str(shot_name + "_CHAR02_ANIM.abc")
     abc_Willis = str(shot_name + "_CHAR03_ANIM.abc")
     abc_Bruce_light = str(shot_name + "_CHAR02_LIGHT.abc")
+    
 
     #REPATH TO CACHE
     if "scenes" in path:
@@ -300,7 +301,6 @@ def import_abc(*args):
                 #mel.eval(command)
             except :
                 print ("no no no no")
-
 
         if "BRUCE" in character:
             try :
@@ -334,10 +334,27 @@ def import_abc(*args):
             try :
                 cmds.file(willis_red_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
                 cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
-                print ( "Fais danser ta rouge ventouse Willis")
+                print ( "Fais vriller ta rouge ventouse Willis")
                 #mel.eval(command)
             except :
                 print ("no no no no")
+
+    else:
+        path2 = path.replace("\\", "/")
+
+def import_cam(*args):
+    shot_name = cmds.textField(merge_shot_UI, query = True, text = True)
+    abc_camera = str( "CAM_" + shot_name + ".abc")
+
+    #REPATH TO CACHE
+    if "maya" in path:
+        path_spl = path.split("maya")
+        path_to_cache = path_spl[0] + "camera"
+        path_to_camera = os.path.join( path_to_cache, abc_camera)
+        try:
+            cmds.file(path_to_camera, i = True) #Import cam
+        except:
+            print ( "oww, no cam")
 
     else:
         path2 = path.replace("\\", "/")
@@ -414,6 +431,6 @@ willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 
 # BUTTONS
 cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
-cmds.button ( label = "Reboot ??")
+cmds.button ( label = "Import Camera", backgroundColor=[0.0, 0.2, 0.2], c= import_cam)
 
 cmds.showWindow (diUi["window"]["main"])
