@@ -388,10 +388,19 @@ def import_cam(*args):
                         "camera",
                         abc_camera)
 
+    path_020 = os.path.join(server,
+                        shot_020_path,
+                        shot_name,
+                        "camera",
+                        abc_camera)
+
     try:
         cmds.file(path, i = True) #Import cam
     except:
-        print ( "oww, no cam")
+        try:
+            cmds.file(path_020, i = True) #Import cam
+        except:
+            print ( "oww, no cam")
 
 
 #############################
