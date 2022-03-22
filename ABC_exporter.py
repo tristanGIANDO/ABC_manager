@@ -50,7 +50,8 @@ scenes_path = os.path.join("maya",
                         "lookdev")
 
 cache_path = os.path.join("maya",
-                        "cache")  
+                        "cache")
+                  
 
 shot_list = ["010",
             "020_010",
@@ -138,46 +139,46 @@ def exportBakeCamera(*args):
        
 ###### EXPORT LINDSEY ########################################################################
 def exportLindsey(*args):
-    char_space = cmds.textField(lindsey_space_text, query = True, text = True)
+    char_space = "CHAR01"
     char_geo = "Lindsey_P_geoHi:Lindsey_MESH"
     char_head = "Lindsey_P_geoHi:Lindsey_head"
 
-    # QUERY FILE NAME
-    name = cmds.textField(abc_name_text, query = True, text = True)
-    print (name)
     
+    # QUERY FILE NAME
+    shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
+
     #REPATH TO CACHE
     if "scenes" in path:
-        path_spl = path.split("scenes")
-        newpath = path_spl[0] + "cache"
-        path2 = newpath.replace("\\", "/") 
-    else:
-        path2 = path.replace("\\", "/")
-    
-    #EXPORT
-    if cmds.checkBox(current_frame_UI, q = True, v = True):
-        abc_geo = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
-        abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-        for abc in [abc_geo, abc_head]:
-            mel.eval(abc)
-        print ( " I'm exporting the current frame ! ")
-        print ( " Lindsey is exported >> MESH, HEAD")
-        print ( " #FightForLindseyBlonde")
-    else:
-        abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
-        abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-        for abc in [abc_geo, abc_head]:
-            mel.eval(abc)
-        print ( " I'm exporting the Time Slider ! ")
-        print ( " Lindsey is exported >> MESH, HEAD")
-        print ( " #FightForLindseyBlonde")
+        path_spl = path.split("05_shot")
+        newpath = path_spl[0] + "05_shot/" + shot_name
+        path2 = newpath.replace("\\", "/")
+        anim = os.path.join(shot_name + "_" + char_space + "_" + suffix + ".abc")
+
+        #EXPORT
+        if cmds.checkBox(current_frame_UI, q = True, v = True):
+            abc_geo = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+            abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+            for abc in [abc_geo, abc_head]:
+                mel.eval(abc)
+            print ( " I'm exporting the current frame ! ")
+            print ( " Lindsey is exported >> MESH, HEAD")
+            print ( " #FightForLindseyBlonde")
+        else:
+            abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+            abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+            for abc in [abc_geo, abc_head]:
+                mel.eval(abc)
+            print ( " I'm exporting the Time Slider ! ")
+            print ( " Lindsey is exported >> MESH, HEAD")
+            print ( " #FightForLindseyBlonde")
 
 ###### EXPORT BRUCE ########################################################################
 def exportBruce(*args):
-    char_space = cmds.textField(bruce_space_text, query = True, text = True)
+    char_space = "CHAR02"
     char_geo = "Bruce_P_geoHi:Bruce_MESH"
     char_head = "Bruce_P_geoHi:Bruce_head"
     char_arms = "Bruce_P_geoHi:Bruce_arms"
+    char_mask = "Bruce_P_geoHi:Bruce_arms" #####################################
     char_light = "CTRL_Light"
 
     # QUERY FILE NAME
