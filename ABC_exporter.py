@@ -307,6 +307,9 @@ def export_char(*args):
     if "WILLIS" in character:    
         exportWillis()
 
+    if "TENTACLE" in character:    
+        exportTentacle()
+
 ###### IMPORT AND MERGE ABC ###############################################################################
 def import_abc(*args):
     
@@ -460,6 +463,7 @@ lindsey_lookdev_UI = cmds.menuItem( label= "LINDSEY" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE_OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
+tentacle_UI = cmds.menuItem( label= "TENTACLE" )
 
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
@@ -473,6 +477,7 @@ cmds.text( label= "  ")
 ###### TEXT
 cmds.setParent (diUi["lays"]["text"])
 current_frame_UI = cmds.checkBox( label = "Export Current Frame")
+export_all_UI = cmds.checkBox( label = "Export All")
 cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
 cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.5, 0.5], c= exportTentacle )
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
