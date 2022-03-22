@@ -8,6 +8,16 @@ import maya.mel as mel
        
 suffix = "ANIM"
 
+bruce = "Bruce"
+lindsey = "Lindsey"
+willis = "Willis"
+willis_red = "WillisRed"
+bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
+bruce_out_lookdev = os.path.join("bruce_OUT_P_lookdev.ma")
+lindsey_lookdev = os.path.join("Lindsey_P_lookdev.ma")
+willis_lookdev = os.path.join("Willis_P_lookdev.ma")
+willis_red_lookdev = os.path.join("WillisRed_P_lookdev.ma")
+
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
 print (scene_name)
@@ -24,10 +34,38 @@ current_frame = str(int(current)) + ' ' + str(int(current))
 
 # PATH TO LOOKDEV
 server = os.path.join(r"\\gandalf/3D4_21_22",
-                        "instinct")
-bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
+                        "instinct",
+                        "04_asset",
+                        "character")
+
+scenes_path = os.path.join("maya",
+                        "scenes",
+                        "publish",
+                        "lookdev")
+                        
+
 bruce_lookdev_path = os.path.join( server,
                         bruce_lookdev)
+
+bruce_OUT_lookdev_path = os.path.join( server,
+                        bruce,
+                        scenes_path,
+                        bruce_out_lookdev)
+
+lindsey_lookdev_path = os.path.join( server,
+                        lindsey,
+                        scenes_path,
+                        lindsey_lookdev)
+
+willis_lookdev_path = os.path.join( server,
+                        willis,
+                        scenes_path,
+                        willis_lookdev)
+
+willis_red_lookdev_path = os.path.join( server,
+                        willis_red,
+                        scenes_path,
+                        willis_red_lookdev)
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -250,13 +288,33 @@ def import_abc(*args):
 
         print ( path_to_cache )   
     
-        if "Lindsey" in character:
+        if "Lindsey_P_lookdev" in character:
             print ( "c'est parti")
 
-        if "Bruce" in character:
+        if "Bruce_P_lookdev" in character:
             print ( "c'est parti")
             try :
                 cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+                cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
+                cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
+
+                disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
+            
+                cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
+                cmds.parent(disk_light, "CHAR02:CTRL_Light")
+
+                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
+                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
+
+                print ( "done ")
+                #mel.eval(command)
+            except :
+                print ("no no no no")
+
+        if "Bruce_OUT_P_lookdev" in character:
+            print ( "c'est parti")
+            try :
+                cmds.file(bruce_OUT_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
                 cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
                 cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
 
