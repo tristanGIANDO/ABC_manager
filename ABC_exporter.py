@@ -494,7 +494,6 @@ cmds.text( label= "  ")
 cmds.setParent (diUi["lays"]["text"])
 current_frame_UI = cmds.checkBox( label = "Export Current Frame")
 cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
-cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.5, 0.5], c= exportTentacle )
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
 
 cmds.setParent (diUi["lays"]["cam"])
