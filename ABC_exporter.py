@@ -7,9 +7,6 @@ import os
 import maya.mel as mel
        
 suffix = "ANIM"
-
-
-
 bruce = "Bruce"
 lindsey = "Lindsey"
 willis = "Willis"
@@ -310,6 +307,9 @@ def exportAnything(*args):
             mel.eval(command)
             print ( "Time Slider exported >> " + shot_name + "_" + name + "_" + suffix + ".abc")
 
+def export_char(*args):
+    exportLindsey()
+
 ###### IMPORT AND MERGE ABC ###############################################################################
 def import_abc(*args):
     
@@ -385,7 +385,6 @@ def import_abc(*args):
             cmds.file(willis_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
             cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
             print ( "Fais danser ta blanche ventouse Willis")
-            #mel.eval(command)
         except :
             print ("no no no no")
 
@@ -396,7 +395,6 @@ def import_abc(*args):
             cmds.file(willis_red_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
             cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
             print ( "Fais vriller ta rouge ventouse Willis")
-            #mel.eval(command)
         except :
             print ("no no no no")
 
@@ -442,53 +440,19 @@ if cmds.window("giando", exists=True):
 window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Manager_0.3", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
-diUi["lays"]["form"] = cmds.formLayout()
-diUi["lays"]["shot_name"] = cmds.columnLayout(adj = True, p=diUi["window"]["main"])
-diUi["lays"]["tabs"] = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
-cmds.formLayout( diUi["lays"]["form"], edit=True, attachForm=((diUi["lays"]["tabs"], 'top', 0), (diUi["lays"]["tabs"], 'left', 0), (diUi["lays"]["tabs"], 'bottom', 0), (diUi["lays"]["tabs"], 'right', 0)) )
+diUi["lays"]["manager"] = cmds.frameLayout("GLOBAL", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0))
+diUi["lays"]["shot"] = cmds.columnLayout(adj = True, p=diUi["lays"]["manager"])
 # TAB EXPORT
-diUi["lays"]["global"] = cmds.frameLayout("EXPORT", p=diUi["lays"]["tabs"], bgc=(0.0,0.5,0.5))
-diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 80), (2,200)], p=diUi["lays"]["global"])
-diUi["lays"]["text"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
+diUi["lays"]["e_global"] = cmds.frameLayout("EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0), cll =True)
+diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 170), (2,80)], p=diUi["lays"]["e_global"])
+diUi["lays"]["text"] = cmds.columnLayout(adj = True, p=diUi["lays"]["e_global"])
+diUi["lays"]["cam"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 90), (2,150)], p=diUi["lays"]["e_global"])
 # TAB IMPORT
-diUi["lays"]["global"] = cmds.frameLayout("IMPORT", p=diUi["lays"]["tabs"], bgc=(0.0,0.5,0.5))
-diUi["lays"]["import"] = cmds.columnLayout(adj = True, p=diUi["lays"]["global"])
+diUi["lays"]["i_global"] = cmds.frameLayout("IMPORT", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0), cll = True)
+diUi["lays"]["import"] = cmds.columnLayout(adj = True, p=diUi["lays"]["i_global"])
 
 ###########################################################
-
-###### EXPORT BUTTONS
-cmds.setParent (diUi["lays"]["exportButtons"])
-
-cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
-abc_name_text = cmds.textField(tx="030")
-cmds.text( label= "  ")
-current_frame_UI = cmds.checkBox( label = "Export Current Frame")
-cmds.separator()
-cmds.separator()
-cmds.text( label= "NameSpace")
-cmds.text( label= "Functions")
-
-lindsey_space_text = cmds.textField(tx="CHAR01")
-cmds.button ( label = "Export LINDSEY", backgroundColor=[0.0, 0.5, 0.5], c= exportLindsey )
-bruce_space_text = cmds.textField(tx="CHAR02")
-cmds.button ( label = "Export BRUCE", backgroundColor=[0.0, 0.4, 0.4], c= exportBruce )
-willis_space_text = cmds.textField(tx="CHAR03")
-cmds.button ( label = "Export WILLIS", backgroundColor=[0.0, 0.3, 0.3], c= exportWillis )
-tent_space_text = cmds.textField(tx="TENT01")
-cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.2, 0.2], c= exportTentacle )
-any_space_text = cmds.textField(tx="Any")
-cmds.button ( label = "Export ANYTHING", backgroundColor=[0.0, 0.1, 0.1], c= exportAnything )
-cmds.text( label= "Select cam if >>")
-cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.0, 0.0], c= exportBakeCamera )
-
-###### TEXT
-cmds.setParent (diUi["lays"]["text"])
-cmds.text( label= "CHAR EXPORT >> '05_shot/xx/maya/cache' ")
-cmds.text( label= "CAM EXPORT >> '05_shot/xx/camera' ")
-cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
-
-#############################################################
-cmds.setParent (diUi["lays"]["import"])
+cmds.setParent (diUi["lays"]["shot"])
 choose_shot = cmds.optionMenu( label= "Select Shot" )
 for shot in shot_list:
     a = cmds.menuItem(shot)
@@ -500,8 +464,30 @@ bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE_OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 
+###### EXPORT BUTTONS
+cmds.setParent (diUi["lays"]["exportButtons"])
+tent_space_text = cmds.text(label = "Namespace if TENTACLE")
+tent_space_text = cmds.textField(tx="TENT01")
+any_space_text = cmds.text(label = "Namespace if CUSTOM")
+any_space_text = cmds.textField(tx="CUSTOM")
+cmds.text( label= "  ")
+
+
+###### TEXT
+cmds.setParent (diUi["lays"]["text"])
+current_frame_UI = cmds.checkBox( label = "Export Current Frame")
+cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
+cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.5, 0.5], c= exportTentacle )
+cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
+
+cmds.setParent (diUi["lays"]["cam"])
+cmds.text( label= "Select cam if >> ")
+cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.3, 0.3], c= exportBakeCamera )
+
+#############################################################
+cmds.setParent (diUi["lays"]["import"])
 # BUTTONS
-cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
-cmds.button ( label = "Import Camera", backgroundColor=[0.0, 0.2, 0.2], c= import_cam)
+cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.2, 0.2], c= import_abc)
+cmds.button ( label = "Import Camera", backgroundColor=[0.0, 0.1, 0.1], c= import_cam)
 
 cmds.showWindow (diUi["window"]["main"])
