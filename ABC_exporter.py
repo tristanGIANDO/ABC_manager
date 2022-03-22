@@ -465,6 +465,8 @@ willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 tentacle_UI = cmds.menuItem( label= "TENTACLE" )
 
+export_all_UI = cmds.checkBox( label = "Export All")
+
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
 tent_space_text = cmds.text(label = "Namespace if TENTACLE")
@@ -477,7 +479,6 @@ cmds.text( label= "  ")
 ###### TEXT
 cmds.setParent (diUi["lays"]["text"])
 current_frame_UI = cmds.checkBox( label = "Export Current Frame")
-export_all_UI = cmds.checkBox( label = "Export All")
 cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
 cmds.button ( label = "Export TENTACLE", backgroundColor=[0.0, 0.5, 0.5], c= exportTentacle )
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
