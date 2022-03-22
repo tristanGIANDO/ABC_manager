@@ -288,31 +288,17 @@ def import_abc(*args):
 
         print ( path_to_cache )   
     
-        if "Lindsey_P_lookdev" in character:
-            print ( "c'est parti")
-
-        if "Bruce_P_lookdev" in character:
-            print ( "c'est parti")
+        if "LINDSEY" in character:
             try :
-                cmds.file(bruce_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
-                cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
-                cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
-
-                disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
-            
-                cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
-                cmds.parent(disk_light, "CHAR02:CTRL_Light")
-
-                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
-                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
-
-                print ( "done ")
+                cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+                cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+                print ( "Pray for Lindsey Blonde")
                 #mel.eval(command)
             except :
                 print ("no no no no")
 
-        if "Bruce_OUT_P_lookdev" in character:
-            print ( "c'est parti")
+
+        if "BRUCE" in character:
             try :
                 cmds.file(bruce_OUT_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
                 cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
@@ -397,9 +383,14 @@ cmds.setParent (diUi["lays"]["import"])
 cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
 merge_shot_UI = cmds.textField(tx="075")
 import_menu = cmds.optionMenu( label= "Choose lookdev" )
-bruce_lookdev_UI = cmds.menuItem( label= "Bruce_P_lookdev" )
-bruce_out_lookdev_UI = cmds.menuItem( label= "Bruce_OUT_P_lookdev" )
-lindsey_lookdev_UI = cmds.menuItem( label= "Lindsey_P_lookdev" )
+# ITEMS
+# bruce_lookdev_UI = cmds.menuItem( label= "old Bruce" )
+lindsey_lookdev_UI = cmds.menuItem( label= "LINDSEY" )
+bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE_OUT" )
+willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
+willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
+
+# BUTTONS
 cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
 cmds.button ( label = "Reboot ??")
 
