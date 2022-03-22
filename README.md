@@ -1,2 +1,2 @@
 # ABC_manager
-Tool exporting .abc from characters and cam animation
+Tool exporting or importing and merging .abc from characters and cam animation
