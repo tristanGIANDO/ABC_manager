@@ -62,7 +62,6 @@ shot_list = ["010",
             "020_055",
             "020_060",
             "020_080",
-            "020_090",
             "020_100",
             "020_110",
             "020_120",
@@ -107,7 +106,7 @@ willis_red_lookdev_path = os.path.join( server,
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
     # QUERY FILE NAME
-    name = cmds.textField(abc_name_text, query=1, text=1)
+    name = cmds.optionMenu (choose_shot, q=True, v=True) 
     sel = cmds.ls(sl=True)
     
     #REPATH TO CAMERA
