@@ -324,38 +324,71 @@ def import_abc(*args):
                         shot_path,
                         shot_name,
                         cache_path)
+
+    path_020 = os.path.join(server,
+                        shot_020_path,
+                        shot_name,
+                        cache_path)
     
     if "LINDSEY" in character:
         path_to_lindsey = os.path.join(path,
                         abc_Lindsey)
+        path_to_lindsey_020 = os.path.join(path_020,
+                        abc_Lindsey)
+
         try :
             cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
             cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
             print ( "Pray for Lindsey Blonde")
-            #mel.eval(command)
         except :
-            print ("no no no no")
+            try :
+                cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+                try:
+                    cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+                except:
+                    print ( "pas de merge")
+                print ( "Pray for Lindsey Blonde")
+            except:
+                print ("no no no no")
 
     if "BRUCE" in character:
-        try :
-            cmds.file(bruce_OUT_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+        path_to_bruce = os.path.join(path,
+                        abc_Bruce)
+
+        path_to_light = os.path.join(path,
+                        abc_Bruce_light)
+
+        path_to_bruce_020 = os.path.join(path_020,
+                        abc_Bruce)
+
+        path_to_light_020 = os.path.join(path_020,
+                        abc_Bruce_light)
+
+        cmds.file(bruce_OUT_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+
+        if "020_" in path_to_bruce:
+            cmds.AbcImport(str(path_to_bruce_020), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
+            cmds.AbcImport(str(path_to_light_020), mode='import') #Import CTRL Light
+
+        else :
             cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
             cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
-
-            disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
         
+        try:
+            disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
             cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
             cmds.parent(disk_light, "CHAR02:CTRL_Light")
 
             cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
             cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
 
-            print ( "done ")
-            #mel.eval(command)
-        except :
-            print ("no no no no")
+            print ( "done" )
+        except:
+            print (" no light" )
 
     if "WHITE" in character:
+        path_to_willis = os.path.join(path,
+                        abc_Willis)
         try :
             cmds.file(willis_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
             cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
@@ -365,13 +398,15 @@ def import_abc(*args):
             print ("no no no no")
 
     if "RED" in character:
-            try :
-                cmds.file(willis_red_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
-                cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
-                print ( "Fais vriller ta rouge ventouse Willis")
-                #mel.eval(command)
-            except :
-                print ("no no no no")
+        path_to_willis = os.path.join(path,
+                        abc_Willis)
+        try :
+            cmds.file(willis_red_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
+            cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
+            print ( "Fais vriller ta rouge ventouse Willis")
+            #mel.eval(command)
+        except :
+            print ("no no no no")
 
     else:
         path2 = path.replace("\\", "/")
@@ -416,6 +451,7 @@ window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Manager_0.3", 
 
 ###### LAYERS HIERARCHY
 diUi["lays"]["form"] = cmds.formLayout()
+diUi["lays"]["shot_name"] = cmds.columnLayout(adj = True, p=diUi["window"]["main"])
 diUi["lays"]["tabs"] = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
 cmds.formLayout( diUi["lays"]["form"], edit=True, attachForm=((diUi["lays"]["tabs"], 'top', 0), (diUi["lays"]["tabs"], 'left', 0), (diUi["lays"]["tabs"], 'bottom', 0), (diUi["lays"]["tabs"], 'right', 0)) )
 # TAB EXPORT
