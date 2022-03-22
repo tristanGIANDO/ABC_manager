@@ -298,17 +298,32 @@ def exportAnything(*args):
 def export_char(*args):
     character = cmds.optionMenu (import_menu, q=True, v=True)
 
-    if "LINDSEY" in character:
-        exportLindsey()
-    
-    if "BRUCE" in character:
-        exportBruce()
+    if cmds.checkBox(current_frame_UI, q = True, v = True):
+        try:
+            exportLindsey()
+        except:
+            print ( "No Lindsey, no chocolat")
+        try:
+            exportBruce()
+        except:
+            print ( "No Bruce, no chocolat")
+        try:
+            exportWillis()
+        except:
+            print ( "No Willis, no chocolat")
 
-    if "WILLIS" in character:    
-        exportWillis()
+    else:  
+        if "LINDSEY" in character:
+            exportLindsey()
+        
+        if "BRUCE" in character:
+            exportBruce()
 
-    if "TENTACLE" in character:    
-        exportTentacle()
+        if "WILLIS" in character:    
+            exportWillis()
+
+        if "TENTACLE" in character:    
+            exportTentacle()
 
 ###### IMPORT AND MERGE ABC ###############################################################################
 def import_abc(*args):
