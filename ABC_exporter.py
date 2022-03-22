@@ -276,22 +276,26 @@ def import_abc(*args):
     
     character = cmds.optionMenu (import_menu, q=True, v=True)
     shot_name = cmds.textField(merge_shot_UI, query = True, text = True)  
+    abc_Lindsey = str(shot_name + "_CHAR01_ANIM.abc")
     abc_Bruce = str(shot_name + "_CHAR02_ANIM.abc")
+    abc_Willis = str(shot_name + "_CHAR03_ANIM.abc")
     abc_Bruce_light = str(shot_name + "_CHAR02_LIGHT.abc")
 
     #REPATH TO CACHE
     if "scenes" in path:
         path_spl = path.split("scenes")
         path_to_cache = path_spl[0] + "cache"
+        path_to_lindsey = os.path.join( path_to_cache, abc_Lindsey)
         path_to_bruce = os.path.join( path_to_cache, abc_Bruce)
         path_to_light = os.path.join( path_to_cache, abc_Bruce_light)
+        path_to_willis = os.path.join( path_to_cache, abc_Willis)
 
         print ( path_to_cache )   
     
         if "LINDSEY" in character:
             try :
                 cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
-                cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+                cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
                 print ( "Pray for Lindsey Blonde")
                 #mel.eval(command)
             except :
@@ -313,6 +317,24 @@ def import_abc(*args):
                 cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
 
                 print ( "done ")
+                #mel.eval(command)
+            except :
+                print ("no no no no")
+
+        if "WHITE" in character:
+            try :
+                cmds.file(willis_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
+                cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
+                print ( "Fais danser ta blanche ventouse Willis")
+                #mel.eval(command)
+            except :
+                print ("no no no no")
+
+        if "RED" in character:
+            try :
+                cmds.file(willis_red_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
+                cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
+                print ( "Fais danser ta rouge ventouse Willis")
                 #mel.eval(command)
             except :
                 print ("no no no no")
