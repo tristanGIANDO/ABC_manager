@@ -336,31 +336,23 @@ def import_abc(*args):
         path_to_lindsey_020 = os.path.join(path_020,
                         abc_Lindsey)
 
-        try :
-            cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+
+        cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+
+        if "020_" in path_to_lindsey:
+            cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+            print ( "Pray for Lindsey Blonde")
+        else:
             cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
             print ( "Pray for Lindsey Blonde")
-        except :
-            try :
-                cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
-                try:
-                    cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-                except:
-                    print ( "pas de merge")
-                print ( "Pray for Lindsey Blonde")
-            except:
-                print ("no no no no")
 
     if "BRUCE" in character:
         path_to_bruce = os.path.join(path,
                         abc_Bruce)
-
         path_to_light = os.path.join(path,
                         abc_Bruce_light)
-
         path_to_bruce_020 = os.path.join(path_020,
                         abc_Bruce)
-
         path_to_light_020 = os.path.join(path_020,
                         abc_Bruce_light)
 
