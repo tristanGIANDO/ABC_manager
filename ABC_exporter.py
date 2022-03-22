@@ -178,7 +178,7 @@ def exportBruce(*args):
     char_geo = "Bruce_P_geoHi:Bruce_MESH"
     char_head = "Bruce_P_geoHi:Bruce_head"
     char_arms = "Bruce_P_geoHi:Bruce_arms"
-    char_mask = "Bruce_P_geoHi:Bruce_arms" #####################################
+    char_mask = "Bruce_P_geoHi:Grp_mask" #####################################
     char_light = "CTRL_Light"
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
     
@@ -199,21 +199,23 @@ def exportBruce(*args):
             abc_geo = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
             abc_head = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
             abc_arms = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
-            abc_light = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + char_space + '_LIGHT' + '.abc' + ' ";'
-            for abc in [abc_geo, abc_head, abc_arms, abc_light]:
+            abc_light = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_LIGHT' + '.abc' + ' ";'
+            abc_mask = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_mask + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_MASK' + '.abc' + ' ";'
+            for abc in [abc_geo, abc_head, abc_arms, abc_light, abc_mask]:
                 mel.eval(abc)
             print ( " I'm exporting the current frame ! ")
-            print ( " Bruce is exported >> MESH, HEAD, ARMS, LIGHT")
+            print ( " Bruce is exported >> MESH, HEAD, ARMS, LIGHT, MASK")
 
         else:
             abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
             abc_head = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
             abc_arms = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
             abc_light = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_LIGHT' + '.abc' + ' ";'
-            for abc in [abc_geo, abc_head, abc_arms, abc_light]:
+            abc_mask = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_mask + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_MASK' + '.abc' + ' ";'
+            for abc in [abc_geo, abc_head, abc_arms, abc_light, abc_mask]:
                 mel.eval(abc)
             print ( " I'm exporting the Time Slider ! ")
-            print ( " Bruce is exported >> MESH, HEAD, ARMS, LIGHT")
+            print ( " Bruce is exported >> MESH, HEAD, ARMS, LIGHT, MASK")
 
 ###### EXPORT WILLIS ########################################################################
 def exportWillis(*args):
