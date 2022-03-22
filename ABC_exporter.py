@@ -8,6 +8,8 @@ import maya.mel as mel
        
 suffix = "ANIM"
 
+
+
 bruce = "Bruce"
 lindsey = "Lindsey"
 willis = "Willis"
@@ -35,34 +37,68 @@ current_frame = str(int(current)) + ' ' + str(int(current))
 # PATH TO LOOKDEV
 server = os.path.join(r"\\gandalf/3D4_21_22",
                         "instinct",
-                        "04_asset",
+                        )
+
+char_path = os.path.join("04_asset",
                         "character")
+
+shot_path = os.path.join("05_shot") 
+
+shot_020_path = os.path.join("05_shot",
+                        "seq0020")
 
 scenes_path = os.path.join("maya",
                         "scenes",
                         "publish",
                         "lookdev")
                         
+shot_list = ["010",
+            "020_010",
+            "020_020",
+            "020_030",
+            "020_040",
+            "020_050",
+            "020_055",
+            "020_060",
+            "020_080",
+            "020_090",
+            "020_100",
+            "020_110",
+            "020_120",
+            "030",
+            "040",
+            "050",
+            "070",
+            "075",
+            "080",
+            "085",
+            "090",
+            "100",
+            "110"]
 
 bruce_lookdev_path = os.path.join( server,
                         bruce_lookdev)
 
 bruce_OUT_lookdev_path = os.path.join( server,
+                        char_path,
                         bruce,
                         scenes_path,
                         bruce_out_lookdev)
 
 lindsey_lookdev_path = os.path.join( server,
+                        char_path,
                         lindsey,
                         scenes_path,
                         lindsey_lookdev)
 
 willis_lookdev_path = os.path.join( server,
+                        char_path,
                         willis,
                         scenes_path,
                         willis_lookdev)
 
 willis_red_lookdev_path = os.path.join( server,
+                        char_path,
                         willis_red,
                         scenes_path,
                         willis_red_lookdev)
@@ -343,21 +379,20 @@ def import_abc(*args):
         path2 = path.replace("\\", "/")
 
 def import_cam(*args):
-    shot_name = cmds.textField(merge_shot_UI, query = True, text = True)
+    shot_name = cmds.optionMenu (choose_shot, q=True, v=True)
+    # shot_name = cmds.textField(merge_shot_UI, query = True, text = True)
     abc_camera = str( "CAM_" + shot_name + ".abc")
+    path = os.path.join(server,
+                        shot_path,
+                        shot_name,
+                        "camera",
+                        abc_camera)
 
-    #REPATH TO CACHE
-    if "maya" in path:
-        path_spl = path.split("maya")
-        path_to_cache = path_spl[0] + "camera"
-        path_to_camera = os.path.join( path_to_cache, abc_camera)
-        try:
-            cmds.file(path_to_camera, i = True) #Import cam
-        except:
-            print ( "oww, no cam")
+    try:
+        cmds.file(path, i = True) #Import cam
+    except:
+        print ( "oww, no cam")
 
-    else:
-        path2 = path.replace("\\", "/")
 
 #############################
 ## USER INTERFACE SETTINGS ##
@@ -421,9 +456,12 @@ cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
 cmds.setParent (diUi["lays"]["import"])
 cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
 merge_shot_UI = cmds.textField(tx="075")
-import_menu = cmds.optionMenu( label= "Choose lookdev" )
+choose_shot = cmds.optionMenu( label= "Select Shot" )
+for shot in shot_list:
+    a = cmds.menuItem(shot)
+
+import_menu = cmds.optionMenu( label= "Select Character" )
 # ITEMS
-# bruce_lookdev_UI = cmds.menuItem( label= "old Bruce" )
 lindsey_lookdev_UI = cmds.menuItem( label= "LINDSEY" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE_OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
