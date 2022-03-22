@@ -51,7 +51,10 @@ scenes_path = os.path.join("maya",
                         "scenes",
                         "publish",
                         "lookdev")
-                        
+
+cache_path = os.path.join("maya",
+                        "cache")  
+
 shot_list = ["010",
             "020_010",
             "020_020",
@@ -311,62 +314,57 @@ def exportAnything(*args):
 def import_abc(*args):
     
     character = cmds.optionMenu (import_menu, q=True, v=True)
-    shot_name = cmds.textField(merge_shot_UI, query = True, text = True)  
+    shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
     abc_Lindsey = str(shot_name + "_CHAR01_ANIM.abc")
     abc_Bruce = str(shot_name + "_CHAR02_ANIM.abc")
     abc_Willis = str(shot_name + "_CHAR03_ANIM.abc")
     abc_Bruce_light = str(shot_name + "_CHAR02_LIGHT.abc")
+
+    path = os.path.join(server,
+                        shot_path,
+                        shot_name,
+                        cache_path)
     
+    if "LINDSEY" in character:
+        path_to_lindsey = os.path.join(path,
+                        abc_Lindsey)
+        try :
+            cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+            cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+            print ( "Pray for Lindsey Blonde")
+            #mel.eval(command)
+        except :
+            print ("no no no no")
 
-    #REPATH TO CACHE
-    if "scenes" in path:
-        path_spl = path.split("scenes")
-        path_to_cache = path_spl[0] + "cache"
-        path_to_lindsey = os.path.join( path_to_cache, abc_Lindsey)
-        path_to_bruce = os.path.join( path_to_cache, abc_Bruce)
-        path_to_light = os.path.join( path_to_cache, abc_Bruce_light)
-        path_to_willis = os.path.join( path_to_cache, abc_Willis)
+    if "BRUCE" in character:
+        try :
+            cmds.file(bruce_OUT_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+            cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
+            cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
 
-        print ( path_to_cache )   
-    
-        if "LINDSEY" in character:
-            try :
-                cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
-                cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-                print ( "Pray for Lindsey Blonde")
-                #mel.eval(command)
-            except :
-                print ("no no no no")
+            disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
+        
+            cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
+            cmds.parent(disk_light, "CHAR02:CTRL_Light")
 
-        if "BRUCE" in character:
-            try :
-                cmds.file(bruce_OUT_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
-                cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
-                cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
+            cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
+            cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
 
-                disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
-            
-                cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
-                cmds.parent(disk_light, "CHAR02:CTRL_Light")
+            print ( "done ")
+            #mel.eval(command)
+        except :
+            print ("no no no no")
 
-                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
-                cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
+    if "WHITE" in character:
+        try :
+            cmds.file(willis_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
+            cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
+            print ( "Fais danser ta blanche ventouse Willis")
+            #mel.eval(command)
+        except :
+            print ("no no no no")
 
-                print ( "done ")
-                #mel.eval(command)
-            except :
-                print ("no no no no")
-
-        if "WHITE" in character:
-            try :
-                cmds.file(willis_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
-                cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
-                print ( "Fais danser ta blanche ventouse Willis")
-                #mel.eval(command)
-            except :
-                print ("no no no no")
-
-        if "RED" in character:
+    if "RED" in character:
             try :
                 cmds.file(willis_red_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR03") # Reference Willis Lookdev
                 cmds.AbcImport(str(path_to_willis), mode='import', connect= "CHAR03:Willis_P_geoHi:grp_willis") # Merge ABC
@@ -463,8 +461,6 @@ cmds.text( label= "If not in shot scn, EXPORT >> 'path/to/the/scn' ")
 
 #############################################################
 cmds.setParent (diUi["lays"]["import"])
-cmds.text( label= "SHOT NAME", fn = "boldLabelFont")
-merge_shot_UI = cmds.textField(tx="075")
 choose_shot = cmds.optionMenu( label= "Select Shot" )
 for shot in shot_list:
     a = cmds.menuItem(shot)
