@@ -1,2 +1,2 @@
 # ABC_manager
-This tool allows to export in .abc, or import and merge characters, cameras or selections animations.
+This tool allows to export in .abc characters, cameras or selections animations, or import and merge them with their lookdev version
