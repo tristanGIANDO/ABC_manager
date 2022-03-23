@@ -2,6 +2,9 @@
 # +33651839815
 # giando.tristan@gmail.com
 
+title = "ABC Manager "
+version = "0.4"
+
 import maya.cmds as cmds
 import os
 import maya.mel as mel
@@ -298,7 +301,7 @@ def exportAnything(*args):
 def export_char(*args):
     character = cmds.optionMenu (import_menu, q=True, v=True)
 
-    if cmds.checkBox(current_frame_UI, q = True, v = True):
+    if cmds.checkBox(all_UI, q = True, v = True):
         try:
             exportLindsey()
         except:
@@ -440,6 +443,20 @@ def import_cam(*args):
         except:
             print ( "oww, no cam")
 
+def change_vis_checkbox(*args):
+    if cmds.checkBox(all_UI, q = True, v = True):
+        cmds.optionMenu(import_menu, edit = True, en = False)
+    else:
+        cmds.optionMenu(import_menu, edit = True, en = True)
+
+def change_vis_menu(*args):
+    character = cmds.optionMenu (import_menu, q=True, v=True)
+    if "TENTACLE" in character:
+        cmds.textField(tent_space_text, edit = True, en = True)
+        cmds.text(tent_space_lbl, edit = True, en = True)
+    else:
+        cmds.textField(tent_space_text, edit = True, en = False)
+        cmds.text(tent_space_lbl, edit = True, en = False)
 
 #############################
 ## USER INTERFACE SETTINGS ##
@@ -452,7 +469,7 @@ diUi["window"] = {}
 
 if cmds.window("giando", exists=True):
 	cmds.deleteUI("giando")
-window = diUi["window"]["main"]= cmds.window("giando", title="ABC_Manager_0.3", widthHeight=(20, 20), sizeable=True, maximizeButton=False)
+window = diUi["window"]["main"]= cmds.window("giando", title= title + version, widthHeight=(20, 20), sizeable=True, maximizeButton=False)
 
 ###### LAYERS HIERARCHY
 diUi["lays"]["manager"] = cmds.frameLayout("GLOBAL", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0))
@@ -472,7 +489,7 @@ choose_shot = cmds.optionMenu( label= "Select Shot" )
 for shot in shot_list:
     a = cmds.menuItem(shot)
 
-import_menu = cmds.optionMenu( label= "Select Character" )
+import_menu = cmds.optionMenu( label= "Select Character" , cc = change_vis_menu)
 # ITEMS
 lindsey_lookdev_UI = cmds.menuItem( label= "LINDSEY" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE_OUT" )
@@ -480,13 +497,14 @@ willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 tentacle_UI = cmds.menuItem( label= "TENTACLE" )
 
-export_all_UI = cmds.checkBox( label = "Export All")
+all_UI = cmds.checkBox( label = "All", cc = change_vis_checkbox)
+
 
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
-tent_space_text = cmds.text(label = "Namespace if TENTACLE")
+tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
-any_space_text = cmds.text(label = "Namespace if CUSTOM")
+any_space_lbl = cmds.text(label = "Namespace if CUSTOM")
 any_space_text = cmds.textField(tx="CUSTOM")
 cmds.text( label= "  ")
 
