@@ -537,27 +537,19 @@ window = diUi["window"]["main"]= cmds.window("giando", title= title + version, w
 diUi["lays"]["manager"] = cmds.frameLayout("GLOBAL", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0))
 diUi["lays"]["shot"] = cmds.columnLayout(adj = True, p=diUi["lays"]["manager"])
 # TAB EXPORT
-diUi["lays"]["e_global"] = cmds.frameLayout("EXPORT", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0), cll =True)
-diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 170), (2,80)], p=diUi["lays"]["e_global"])
-diUi["lays"]["text"] = cmds.columnLayout(adj = True, p=diUi["lays"]["e_global"])
-diUi["lays"]["cam"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 90), (2,150)], p=diUi["lays"]["e_global"])
-# TAB IMPORT
-diUi["lays"]["i_global"] = cmds.frameLayout("IMPORT", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0), cll = True)
-diUi["lays"]["import"] = cmds.columnLayout(adj = True, p=diUi["lays"]["i_global"])
+
+
+
 tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
-child1 = cmds.rowColumnLayout(numberOfColumns=2)
-cmds.button()
-cmds.button()
-cmds.button()
+
+diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(numberOfColumns=2)
+
 cmds.setParent( '..' )
 
-child2 = cmds.rowColumnLayout(numberOfColumns=2)
-cmds.button()
-cmds.button()
-cmds.button()
+diUi["lays"]["import"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
 
-cmds.tabLayout( tabs, edit=True, tabLabel=((child1, 'One'), (child2, 'Two')) )
+cmds.tabLayout( tabs, edit=True, tabLabel=((diUi["lays"]["exportButtons"], 'EXPORT'), (diUi["lays"]["import"], 'IMPORT')) )
 
 ###########################################################
 cmds.setParent (diUi["lays"]["shot"])
@@ -587,13 +579,13 @@ cmds.text( label= "  ")
 
 
 ###### TEXT
-cmds.setParent (diUi["lays"]["text"])
+# cmds.setParent (diUi["lays"]["text"])
 
 cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
 
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
 
-cmds.setParent (diUi["lays"]["cam"])
+# cmds.setParent (diUi["lays"]["cam"])
 cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Head', 'Cloth'], vr=True )
 cmds.text(label="")
 cmds.text( label= "Select cam if >> ")
