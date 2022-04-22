@@ -1,3 +1,4 @@
+
 # Created by Tristan GIANDORIGGIO
 # +33651839815
 # giando.tristan@gmail.com
@@ -58,6 +59,7 @@ cache_path = os.path.join("maya",
                   
 
 shot_list = ["010",
+            "020_007",
             "020_010",
             "020_020",
             "020_030",
@@ -152,10 +154,18 @@ def exportLindsey(*args):
 
     #REPATH TO CACHE
     if "scenes" in path:
+        #classic path
         path_spl = path.split("05_shot")
         newpath = path_spl[0] + "05_shot/" + shot_name
         path2 = newpath.replace("\\", "/")
-        anim = os.path.join(shot_name + "_" + char_space + "_" + suffix + ".abc")
+
+        #path 020
+        path_spl_020 = path.split("05_shot")
+        newpath_020 = path_spl_020[0] + "05_shot/" + shot_name
+        path2_020 = newpath_020.replace("\\", "/")
+
+        anim = os.path.join(shot_name + "_" + char_space + "_" + suffix + ".abc") #Nom du fichier à exporter
+
 
         #EXPORT
         if cmds.checkBox(current_frame_UI, q = True, v = True):
@@ -348,6 +358,7 @@ def import_abc(*args):
                         shot_name,
                         cache_path)
     
+    
     if "LINDSEY" in character:
         path_to_lindsey = os.path.join(path,
                         abc_Lindsey)
@@ -418,6 +429,7 @@ def import_abc(*args):
 
     else:
         path2 = path.replace("\\", "/")
+
 
 def import_cam(*args):
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True)
