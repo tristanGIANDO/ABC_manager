@@ -544,6 +544,20 @@ diUi["lays"]["cam"] = cmds.rowColumnLayout(nc =2, columnWidth=[(1, 90), (2,150)]
 # TAB IMPORT
 diUi["lays"]["i_global"] = cmds.frameLayout("IMPORT", p=diUi["window"]["main"], bgc=(0.0,0.0,0.0), cll = True)
 diUi["lays"]["import"] = cmds.columnLayout(adj = True, p=diUi["lays"]["i_global"])
+tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
+child1 = cmds.rowColumnLayout(numberOfColumns=2)
+cmds.button()
+cmds.button()
+cmds.button()
+cmds.setParent( '..' )
+
+child2 = cmds.rowColumnLayout(numberOfColumns=2)
+cmds.button()
+cmds.button()
+cmds.button()
+cmds.setParent( '..' )
+
+cmds.tabLayout( tabs, edit=True, tabLabel=((child1, 'One'), (child2, 'Two')) )
 
 ###########################################################
 cmds.setParent (diUi["lays"]["shot"])
@@ -559,7 +573,8 @@ willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 tentacle_UI = cmds.menuItem( label= "TENTACLE" )
 
-all_UI = cmds.checkBox( label = "All", cc = change_vis_checkbox)
+all_UI = cmds.checkBox( label = "All Characters", cc = change_vis_checkbox)
+current_frame_UI = cmds.checkBox( label = "Export Current Frame")
 
 
 ###### EXPORT BUTTONS
@@ -573,11 +588,14 @@ cmds.text( label= "  ")
 
 ###### TEXT
 cmds.setParent (diUi["lays"]["text"])
-current_frame_UI = cmds.checkBox( label = "Export Current Frame")
+
 cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
+
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
 
 cmds.setParent (diUi["lays"]["cam"])
+cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Head', 'Cloth'], vr=True )
+cmds.text(label="")
 cmds.text( label= "Select cam if >> ")
 cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.3, 0.3], c= exportBakeCamera )
 
