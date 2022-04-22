@@ -543,7 +543,6 @@ diUi["lays"]["shot"] = cmds.columnLayout(adj = True, p=diUi["lays"]["manager"])
 tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
 
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(numberOfColumns=2)
-
 cmds.setParent( '..' )
 
 diUi["lays"]["import"] = cmds.rowColumnLayout(numberOfColumns=2)
@@ -560,33 +559,41 @@ for shot in shot_list:
 import_menu = cmds.optionMenu( label= "Select Character" , cc = change_vis_menu)
 # ITEMS
 lindsey_lookdev_UI = cmds.menuItem( label= "LINDSEY" )
-bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE_OUT" )
+bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 tentacle_UI = cmds.menuItem( label= "TENTACLE" )
 
 all_UI = cmds.checkBox( label = "All Characters", cc = change_vis_checkbox)
-current_frame_UI = cmds.checkBox( label = "Export Current Frame")
+
 
 
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
+
+current_frame_UI = cmds.checkBox( label = "Export Current Frame")
+cmds.text( label= "  ")
+
+lindsey_box = cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Groom', 'Cloth'], vr=True )
+bruce_box = cmds.checkBoxGrp( numberOfCheckBoxes=4, en=True, label='Bruce', labelArray4=['Light', 'Groom', 'Mask', 'Balls'], vr=True )
+
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
 any_space_lbl = cmds.text(label = "Namespace if CUSTOM")
 any_space_text = cmds.textField(tx="CUSTOM")
-cmds.text( label= "  ")
+
 
 
 ###### TEXT
 # cmds.setParent (diUi["lays"]["text"])
 
-cmds.button ( label = "Export CHARACTER", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
+cmds.button ( label = "Export CHARACTER(S)", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
 
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
 
 # cmds.setParent (diUi["lays"]["cam"])
-cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Head', 'Cloth'], vr=True )
+
+cmds.text(label="")
 cmds.text(label="")
 cmds.text( label= "Select cam if >> ")
 cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.3, 0.3], c= exportBakeCamera )
