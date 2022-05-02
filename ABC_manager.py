@@ -29,7 +29,8 @@ path_to_scene = os.path.dirname(scene_name)
 path = os.path.join(path_to_scene)
 
 # START FRAME END FRAME
-start  = int(cmds.playbackOptions( q=True,min=True ))
+# start  = int(cmds.playbackOptions( q=True,min=True ))
+start  = int(950)
 end = int(cmds.playbackOptions( q=True,max=True ))
 current = int(cmds.currentTime(q=True))
 
@@ -544,6 +545,7 @@ tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"][
 
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
+diUi["lays"]["exportThree"] = cmds.rowColumnLayout(numberOfColumns=3)
 
 diUi["lays"]["import"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
