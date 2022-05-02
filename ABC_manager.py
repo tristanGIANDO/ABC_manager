@@ -114,6 +114,11 @@ willis_red_lookdev_path = os.path.join( server,
 def exportBakeCamera(*args):
     # QUERY FILE NAME
     name = cmds.optionMenu (choose_shot, q=True, v=True) 
+
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
+    
     sel = cmds.ls(sl=True)
     
     #REPATH TO CAMERA
@@ -152,6 +157,11 @@ def exportLindsey(*args):
     
     # QUERY FILE NAME
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
+
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
+
 
     #REPATH TO CACHE
     if "scenes" in path:
@@ -216,6 +226,10 @@ def exportBruce(*args):
     char_mask = "Bruce_P_geoHi:Grp_mask" #####################################
     char_light = "CTRL_Light"
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
+
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
     
     #REPATH TO CACHE
     if "scenes" in path:
@@ -286,6 +300,10 @@ def exportWillis(*args):
     char_space = "CHAR03"
     char_geo = "Willis_P_geoHi:grp_willis"
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
+
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
     
     #REPATH TO CACHE
     if "scenes" in path:
@@ -309,6 +327,10 @@ def exportTentacle(*args):
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
     char_geo = "tentacle_P_geoHi:grp_tentacle"
 
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
+
     #REPATH TO CACHE
     if "scenes" in path:
         path_spl = path.split("05_shot")
@@ -330,7 +352,12 @@ def exportTentacle(*args):
 def exportAnything(*args):
     # QUERY FILE NAME
     name = cmds.textField(any_space_text, query = True, text = True) 
-    shot_name = cmds.textField(abc_name_text, query = True, text = True)      
+    shot_name = cmds.textField(abc_name_text, query = True, text = True)   
+
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
+
     sel = cmds.ls(sl=True)
     
     #REPATH TO CACHE
@@ -541,7 +568,7 @@ diUi["lays"]["shot"] = cmds.columnLayout(adj = True, p=diUi["lays"]["manager"])
 
 
 
-tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"], bgc=(0.6,0.6,0.6))
+tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"], bgc=(0.6,0.6,0.6), bs = "full")
 
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
