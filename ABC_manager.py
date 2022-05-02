@@ -4,7 +4,7 @@
 # giando.tristan@gmail.com
 
 title = "ABC Manager "
-version = "0.5"
+version = "0.6"
 
 import maya.cmds as cmds
 import os
@@ -541,11 +541,11 @@ diUi["lays"]["shot"] = cmds.columnLayout(adj = True, p=diUi["lays"]["manager"])
 
 
 
-tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"])
+tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5, p=diUi["window"]["main"], bgc=(0.6,0.6,0.6))
 
 diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
-diUi["lays"]["exportThree"] = cmds.rowColumnLayout(numberOfColumns=3)
+
 
 diUi["lays"]["import"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
@@ -573,6 +573,9 @@ all_UI = cmds.checkBox( label = "All Characters", cc = change_vis_checkbox)
 ###### EXPORT BUTTONS
 cmds.setParent (diUi["lays"]["exportButtons"])
 
+
+start_frame_UI = cmds.textField(tx="950")
+end_frame_UI = cmds.textField(tx="1001")
 current_frame_UI = cmds.checkBox( label = "Export Current Frame")
 cmds.text( label= "  ")
 
@@ -589,7 +592,7 @@ any_space_text = cmds.textField(tx="CUSTOM")
 ###### TEXT
 # cmds.setParent (diUi["lays"]["text"])
 
-cmds.button ( label = "Export CHARACTER(S)", backgroundColor=[0.0, 0.6, 0.6], c= export_char )
+cmds.button ( label = "Export CHARACTER(S)", backgroundColor=[0.0, 0.4, 0.4], c= export_char )
 
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
 
@@ -598,12 +601,12 @@ cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= expor
 cmds.text(label="")
 cmds.text(label="")
 cmds.text( label= "Select cam if >> ")
-cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.3, 0.3], c= exportBakeCamera )
+cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.4, 0.4], c= exportBakeCamera )
 
 #############################################################
 cmds.setParent (diUi["lays"]["import"])
 # BUTTONS
-cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.2, 0.2], c= import_abc)
-cmds.button ( label = "Import Camera", backgroundColor=[0.0, 0.1, 0.1], c= import_cam)
+cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
+cmds.button ( label = "Import Camera", backgroundColor=[0.0, 0.4, 0.4], c= import_cam)
 
 cmds.showWindow (diUi["window"]["main"])
