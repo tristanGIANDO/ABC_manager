@@ -118,7 +118,7 @@ def exportBakeCamera(*args):
     start = cmds.textField(start_frame_UI, query = True, text = True)
     end = cmds.textField(end_frame_UI, query = True, text = True)
     time_slider = str(int(start)) + ' ' + str(int(end))
-    
+
     sel = cmds.ls(sl=True)
     
     #REPATH TO CAMERA
@@ -548,6 +548,14 @@ def change_vis_menu(*args):
         cmds.textField(tent_space_text, edit = True, en = False)
         cmds.text(tent_space_lbl, edit = True, en = False)
 
+def change_vis_frame_range(*args):
+    if cmds.checkBox(current_frame_UI, q = True, v = True):
+        cmds.textField(start_frame_UI, edit = True, en = False)
+        cmds.textField(end_frame_UI, edit = True, en = False)
+    else:
+        cmds.textField(start_frame_UI, edit = True, backgroundColor=[1.0, 1.0, 1.0], en = True)
+        cmds.textField(end_frame_UI, edit = True, backgroundColor=[1.0, 1.0, 1.0], en = True)
+
 #############################
 ## USER INTERFACE SETTINGS ##
 #############################
@@ -603,7 +611,7 @@ cmds.setParent (diUi["lays"]["exportButtons"])
 
 start_frame_UI = cmds.textField(tx="950")
 end_frame_UI = cmds.textField(tx="1001")
-current_frame_UI = cmds.checkBox( label = "Export Current Frame")
+current_frame_UI = cmds.checkBox( label = "Export Current Frame", cc = change_vis_frame_range)
 cmds.text( label= "  ")
 
 lindsey_box = cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Groom', 'Cloth'], vr=True )
