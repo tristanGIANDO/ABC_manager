@@ -4,7 +4,7 @@
 # giando.tristan@gmail.com
 
 title = "ABC Manager "
-version = "0.6"
+version = "0.7"
 
 import maya.cmds as cmds
 import os
@@ -600,6 +600,7 @@ bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 tentacle_UI = cmds.menuItem( label= "TENTACLE" )
+zodiac_UI = cmds.menuItem( label= "ZODIAC (wip)" )
 
 all_UI = cmds.checkBox( label = "All Characters", cc = change_vis_checkbox)
 
@@ -614,8 +615,23 @@ end_frame_UI = cmds.textField(tx="1001")
 current_frame_UI = cmds.checkBox( label = "Export Current Frame", cc = change_vis_frame_range)
 cmds.text( label= "  ")
 
-lindsey_box = cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Groom', 'Cloth'], vr=True )
-bruce_box = cmds.checkBoxGrp( numberOfCheckBoxes=4, en=True, label='Bruce', labelArray4=['Light', 'Groom', 'Mask', 'Balls'], vr=True )
+# lindsey_box = cmds.checkBoxGrp( numberOfCheckBoxes=3, en=True, label='Lindsey', labelArray3=['Proxy', 'Groom', 'Cloth'], vr=True )
+# bruce_box = cmds.checkBoxGrp( numberOfCheckBoxes=4, en=True, label='Bruce', labelArray4=['Light', 'Groom', 'Mask', 'Balls'], vr=True )
+cmds.separator()
+cmds.separator()
+
+cmds.text(label = "Export Attributes")
+
+cmds.text(label = "  ")
+cmds.checkBox( label='Lindsey Proxy (wip)')
+cmds.checkBox( label='Lindsey Groom (wip)')
+cmds.checkBox( label='Lindsey Cloth (wip)')
+
+cmds.checkBox( label='Bruce Light (wip)')
+cmds.checkBox( label='Bruce Groom (wip)')
+cmds.checkBox( label='Bruce Mask (wip)')
+cmds.checkBox( label='Bruce Emitter (wip)')
+cmds.text(label = "  ")
 
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
