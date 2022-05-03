@@ -818,8 +818,8 @@ check_B_emitter = cmds.checkBox( label='Bruce Emitter')
 
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
-any_space_lbl = cmds.text(label = "Namespace if CUSTOM")
-any_space_text = cmds.textField(tx="CUSTOM (WIP)")
+any_space_lbl = cmds.text(label = "Namespace if CUSTOM", en=False)
+any_space_text = cmds.textField(tx="CUSTOM (WIP)", en=False)
 
 
 
@@ -827,7 +827,7 @@ any_space_text = cmds.textField(tx="CUSTOM (WIP)")
 # cmds.setParent (diUi["lays"]["text"])
 cmds.button ( label = "Export CHARACTER(S)", backgroundColor=[0.0, 0.4, 0.4], c= export_char )
 
-cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
+cmds.button ( label = "Export CUSTOM (Soon)", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything, en=False )
 
 # cmds.setParent (diUi["lays"]["cam"])
 
