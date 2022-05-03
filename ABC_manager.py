@@ -273,15 +273,21 @@ def exportBruce(*args):
         #EXPORT
         if cmds.checkBox(current_frame_UI, q = True, v = True):
             if "seq0020" in path: #Exporter seq020
-                abc_geo = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
-                abc_head = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-                abc_arms = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
-                abc_light = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_LIGHT' + '.abc' + ' ";'
-                abc_mask = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_mask + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_MASK' + '.abc' + ' ";'
-                for abc in [abc_geo, abc_head, abc_arms, abc_light, abc_mask]:
-                    mel.eval(abc)
+                if cmds.checkBox(check_B_geo, q = True, v = True): #export geo
+                    abc_geo = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
+                    mel.eval(abc_geo)
+                if cmds.checkBox(check_B_groom, q = True, v = True): #export head + arms
+                    abc_head = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_arms = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
+                    mel.eval(abc_head)
+                    mel.eval(abc_arms)
+                if cmds.checkBox(check_B_light, q = True, v = True): # export light
+                    abc_light = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_light + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_LIGHT' + '.abc' + ' ";'
+                    mel.eval(abc_light)
+                if cmds.checkBox(check_B_mask, q = True, v = True): # export mask
+                    abc_mask = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_mask + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_MASK' + '.abc' + ' ";'
+                    mel.eval(abc_mask)
                 print ( "I'm exporting the current frame ! ")
-                print ( "Bruce is exported >> MESH, HEAD, ARMS, LIGHT, MASK")
             else: #Exporter classic seq
                 abc_geo = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
                 abc_head = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
@@ -643,15 +649,15 @@ cmds.separator()
 cmds.text(label = "Export Attributes")
 
 cmds.text(label = "  ")
-check_L_geo = cmds.checkBox( label='Lindsey Geo (wip)')
-check_L_groom = cmds.checkBox( label='Lindsey Groom (wip)')
+check_L_geo = cmds.checkBox( label='Lindsey Geo')
+check_L_groom = cmds.checkBox( label='Lindsey Groom')
 check_L_cloth = cmds.checkBox( label='Lindsey Cloth (wip)')
 
+check_B_geo = cmds.checkBox( label='Bruce Geo (wip)')
 check_B_light = cmds.checkBox( label='Bruce Light (wip)')
 check_B_groom = cmds.checkBox( label='Bruce Groom (wip)')
 check_B_mask = cmds.checkBox( label='Bruce Mask (wip)')
 check_B_emitter = cmds.checkBox( label='Bruce Emitter (wip)')
-cmds.text(label = "  ")
 
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
