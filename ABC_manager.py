@@ -24,6 +24,30 @@ willis_lookdev = os.path.join("Willis_P_lookdev.ma")
 willis_red_lookdev = os.path.join("WillisRed_P_lookdev.ma")
 zodiac_lookdev = os.path.join("zodiac_P_lookdev.ma")
 
+shot_list = ["010",
+            "020_007",
+            "020_010",
+            "020_020",
+            "020_030",
+            "020_040",
+            "020_050",
+            "020_055",
+            "020_060",
+            "020_080",
+            "020_100",
+            "020_110",
+            "020_120",
+            "030",
+            "sh0040",
+            "050",
+            "070",
+            "075",
+            "080",
+            "085",
+            "090",
+            "100",
+            "110"]
+
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
 print (scene_name)
@@ -64,29 +88,7 @@ cache_path = os.path.join("maya",
                         "cache")
                   
 
-shot_list = ["010",
-            "020_007",
-            "020_010",
-            "020_020",
-            "020_030",
-            "020_040",
-            "020_050",
-            "020_055",
-            "020_060",
-            "020_080",
-            "020_100",
-            "020_110",
-            "020_120",
-            "030",
-            "040",
-            "050",
-            "070",
-            "075",
-            "080",
-            "085",
-            "090",
-            "100",
-            "110"]
+
 
 
 bruce_OUT_lookdev_path = os.path.join( server,
@@ -585,12 +587,13 @@ def import_abc(*args):
     abc_Bruce = str(shot_name + "_CHAR02_ANIM.abc")
     abc_Willis = str(shot_name + "_CHAR03_ANIM.abc")
     abc_Bruce_light = str(shot_name + "_CHAR02_LIGHT.abc")
-
+    abc_Zodiac = str(shot_name + "_ZODIAC_ANIM.abc")
+    # path to classic shots
     path = os.path.join(server,
                         shot_path,
                         shot_name,
                         cache_path)
-
+    # path to seq 020
     path_020 = os.path.join(server,
                         shot_020_path,
                         shot_name,
@@ -664,6 +667,15 @@ def import_abc(*args):
             print ( "Fais vriller ta rouge ventouse Willis")
         except :
             print ("no no no no")
+
+    if "ZODIAC" in character:
+        path_to_zodiac_020 = os.path.join(path_020,
+                        abc_Zodiac)
+
+
+        cmds.file(zodiac_lookdev_path, r=True, ignoreVersion = True, namespace = "ZODIAC") # Reference Lindsey Lookdev
+        cmds.AbcImport(str(path_to_zodiac_020), mode='import', connect= "ZODIAC:zodiac_P_geoHi:ZODIAC_mesh") # Merge ABC
+        print ( "Le zodiac explose")
 
     else:
         path2 = path.replace("\\", "/")
@@ -764,7 +776,8 @@ diUi["lays"]["exportButtons"] = cmds.rowColumnLayout(numberOfColumns=2)
 cmds.setParent( '..' )
 
 
-diUi["lays"]["import"] = cmds.rowColumnLayout(numberOfColumns=2)
+# diUi["lays"]["import"] = cmds.rowColumnLayout(numberOfColumns=2)
+diUi["lays"]["import"] = cmds.columnLayout(adj=True)
 cmds.setParent( '..' )
 
 cmds.tabLayout( tabs, edit=True, tabLabel=((diUi["lays"]["exportButtons"], 'EXPORT'), (diUi["lays"]["import"], 'IMPORT')) )
