@@ -595,8 +595,16 @@ def import_cam(*args):
 def change_vis_checkbox(*args):
     if cmds.checkBox(all_UI, q = True, v = True):
         cmds.optionMenu(import_menu, edit = True, en = False)
+        for lindsey in [check_L_geo, check_L_cloth, check_L_groom]:
+            cmds.checkBox(lindsey, edit = True, en = True)
+        for bruce in [check_B_geo, check_B_light, check_B_groom, check_B_mask, check_B_emitter]:
+            cmds.checkBox(bruce, edit = True, en = True)
     else:
         cmds.optionMenu(import_menu, edit = True, en = True)
+        for lindsey in [check_L_geo, check_L_cloth, check_L_groom]:
+            cmds.checkBox(lindsey, edit = True, en = False)
+        for bruce in [check_B_geo, check_B_light, check_B_groom, check_B_mask, check_B_emitter]:
+            cmds.checkBox(bruce, edit = True, en = False)
 
 def change_vis_menu(*args):
     character = cmds.optionMenu (import_menu, q=True, v=True)
@@ -606,6 +614,20 @@ def change_vis_menu(*args):
     else:
         cmds.textField(tent_space_text, edit = True, en = False)
         cmds.text(tent_space_lbl, edit = True, en = False)
+    
+    if "LINDSEY" in character:
+        for lindsey in [check_L_geo, check_L_cloth, check_L_groom]:
+            cmds.checkBox(lindsey, edit = True, en = True)
+    else:
+        for lindsey in [check_L_geo, check_L_cloth, check_L_groom]:
+            cmds.checkBox(lindsey, edit = True, en = False)
+
+    if "BRUCE" in character:
+        for bruce in [check_B_geo, check_B_light, check_B_groom, check_B_mask, check_B_emitter]:
+            cmds.checkBox(bruce, edit = True, en = True)    
+    else:
+        for bruce in [check_B_geo, check_B_light, check_B_groom, check_B_mask, check_B_emitter]:
+            cmds.checkBox(bruce, edit = True, en = False)
 
 def change_vis_frame_range(*args):
     if cmds.checkBox(current_frame_UI, q = True, v = True):
@@ -682,15 +704,16 @@ cmds.separator()
 cmds.text(label = "Export Attributes")
 
 cmds.text(label = "  ")
-check_L_geo = cmds.checkBox( label='Lindsey Geo')
-check_L_groom = cmds.checkBox( label='Lindsey Groom')
-check_L_cloth = cmds.checkBox( label='Lindsey Cloth (wip)')
-
-check_B_geo = cmds.checkBox( label='Bruce Geo (wip)')
-check_B_light = cmds.checkBox( label='Bruce Light (wip)')
-check_B_groom = cmds.checkBox( label='Bruce Groom (wip)')
-check_B_mask = cmds.checkBox( label='Bruce Mask (wip)')
-check_B_emitter = cmds.checkBox( label='Bruce Emitter (wip)')
+check_L_geo = cmds.checkBox( label='Lindsey Geo', v=True)
+check_B_geo = cmds.checkBox( label='Bruce Geo', v=True)
+check_L_groom = cmds.checkBox( label='Lindsey Groom', v=True)
+check_B_groom = cmds.checkBox( label='Bruce Groom', v=True)
+check_L_cloth = cmds.checkBox( label='Lindsey Cloth (wip)', v=True)
+check_B_mask = cmds.checkBox( label='Bruce Mask', v=True)
+cmds.text(label = "  ")
+check_B_light = cmds.checkBox( label='Bruce Light')
+cmds.text(label = "  ")
+check_B_emitter = cmds.checkBox( label='Bruce Emitter')
 
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
