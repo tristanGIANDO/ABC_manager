@@ -207,7 +207,7 @@ def exportLindsey(*args):
                 #export cloth
                 if cmds.checkBox(check_L_cloth, q = True, v = True):
                     abc_collider = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
-                    abc_cloth = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_cloth + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
                     mel.eval(abc_collider)
                     mel.eval(abc_cloth)
               
@@ -227,7 +227,7 @@ def exportLindsey(*args):
                 #export cloth
                 if cmds.checkBox(check_L_cloth, q = True, v = True):
                     abc_collider = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
-                    abc_cloth = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_cloth + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
                     mel.eval(abc_collider)
                     mel.eval(abc_cloth)
 
@@ -249,7 +249,7 @@ def exportLindsey(*args):
                 #export cloth
                 if cmds.checkBox(check_L_cloth, q = True, v = True):
                     abc_collider = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
-                    abc_cloth = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_cloth + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
                     mel.eval(abc_collider)
                     mel.eval(abc_cloth)
 
@@ -270,7 +270,7 @@ def exportLindsey(*args):
                 #export cloth
                 if cmds.checkBox(check_L_cloth, q = True, v = True):
                     abc_collider = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
-                    abc_cloth = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_cloth + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
                     mel.eval(abc_collider)
                     mel.eval(abc_cloth)
 
