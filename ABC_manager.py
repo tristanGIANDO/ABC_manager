@@ -245,6 +245,8 @@ def exportBruce(*args):
     char_arms = "Bruce_P_geoHi:Bruce_arms"
     char_mask = "Bruce_P_geoHi:Grp_mask" #####################################
     char_light = "CTRL_Light"
+    char_emitter = "emitter_geo"
+
     shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
 
     start = cmds.textField(start_frame_UI, query = True, text = True)
@@ -287,6 +289,9 @@ def exportBruce(*args):
                 if cmds.checkBox(check_B_mask, q = True, v = True): # export mask
                     abc_mask = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_mask + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_MASK' + '.abc' + ' ";'
                     mel.eval(abc_mask)
+                if cmds.checkBox(check_B_emitter, q = True, v = True): # export emitter
+                    abc_emit = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_emitter + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space  + '_EMIT' + '.abc' + ' ";'
+                    mel.eval(abc_emit)
                 print ( "I'm exporting the current frame ! ")
             else: #Exporter classic seq
                 abc_geo = 'AbcExport -j "-frameRange ' + current_frame + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
