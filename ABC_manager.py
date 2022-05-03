@@ -447,6 +447,55 @@ def exportTentacle(*args):
         mel.eval(abc_geo)
         print ( "Time Slider exported >> " + shot_name + '_' + char_space + "_" + suffix + ".abc")
 
+###### EXPORT ZODIAC ########################################################################
+def exportZodiac(*args):
+    char_space = "ZODIAC"
+    char_geo = "zodiac_P_geoHi:ZODIAC_mesh"
+
+    # QUERY FILE NAME
+    shot_name = cmds.optionMenu (choose_shot, q=True, v=True) 
+
+    start = cmds.textField(start_frame_UI, query = True, text = True)
+    end = cmds.textField(end_frame_UI, query = True, text = True)
+    time_slider = str(int(start)) + ' ' + str(int(end))
+
+
+    #REPATH TO CACHE
+    if "scenes" in path:
+        #classic path
+        path_spl = path.split("05_shot")
+        newpath = path_spl[0] + "05_shot/" + shot_name
+
+        #path 020
+        path_spl_020 = path.split("05_shot")
+        newpath_020 = path_spl_020[0] + "05_shot/seq0020/" + shot_name
+        path2_020 = newpath_020.replace("\\", "/")
+
+        anim = os.path.join(shot_name + "_" + char_space + "_" + suffix + ".abc") #Nom du fichier à exporter
+
+        print (path)
+
+
+        #EXPORT
+        if cmds.checkBox(current_frame_UI, q = True, v = True):
+            if "seq0020" in path:
+                #export geo
+                if cmds.checkBox(check_L_geo, q = True, v = True):
+                    abc_geo = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+                    mel.eval(abc_geo)
+                    print ( " I'm exporting the current frame ! ")
+            else:
+                print ( "Not SEQ020")
+        else:
+            if "seq0020" in path:
+                #export geo
+                if cmds.checkBox(check_L_geo, q = True, v = True):
+                    abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+                    mel.eval(abc_geo)
+                    print ( " I'm exporting the current frame ! ")
+            else:
+                print ( "Not SEQ020")
+
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportAnything(*args):
     # QUERY FILE NAME
@@ -467,10 +516,6 @@ def exportAnything(*args):
     else:
         path2 = path.replace("\\", "/")
 
-    # if ".ma" in scene_name:
-    #     print ( "yo" )
-    #     split = path.split("_A_*")
-    #     print ( split )
     
     #COMMAND
     for x in sel:
@@ -496,11 +541,15 @@ def export_char(*args):
         try:
             exportBruce()
         except:
-            print ( "No Bruce, no chocolat")
+            print ( "No Bruce, no bus")
         try:
             exportWillis()
         except:
-            print ( "No Willis, no chocolat")
+            print ( "No Willis, no police")
+        try:
+            exportZodiac()
+        except:
+            print ( "No Zodiac, nymphomaniac")
 
     else:  
         if "LINDSEY" in character:
@@ -514,6 +563,9 @@ def export_char(*args):
 
         if "TENTACLE" in character:    
             exportTentacle()
+
+        if "ZODIAC" in character:    
+            exportZodiac()
 
 ###### IMPORT AND MERGE ABC ###############################################################################
 def import_abc(*args):
