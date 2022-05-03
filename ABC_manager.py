@@ -153,6 +153,8 @@ def exportLindsey(*args):
     char_space = "CHAR01"
     char_geo = "Lindsey_P_geoHi:Lindsey_MESH"
     char_head = "Lindsey_P_geoHi:Lindsey_head"
+    char_collider = "COLLIDER"
+    char_cloth = "Combi_LOW"
 
     
     # QUERY FILE NAME
@@ -192,6 +194,13 @@ def exportLindsey(*args):
                 if cmds.checkBox(check_L_groom, q = True, v = True):
                     abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
+                
+                #export cloth
+                if cmds.checkBox(check_L_cloth, q = True, v = True):
+                    abc_collider = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    mel.eval(abc_collider)
+                    mel.eval(abc_cloth)
               
                 print ( " I'm exporting the current frame ! ")
                 print ( " #FightForLindseyBlonde")
@@ -205,8 +214,15 @@ def exportLindsey(*args):
                 if cmds.checkBox(check_L_groom, q = True, v = True):
                     abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
+
+                #export cloth
+                if cmds.checkBox(check_L_cloth, q = True, v = True):
+                    abc_collider = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    mel.eval(abc_collider)
+                    mel.eval(abc_cloth)
+
                 print ( " I'm exporting the current frame ! ")
-                print ( " Lindsey is exported >> MESH, HEAD")
                 print ( " #FightForLindseyBlonde")
 
         else:
@@ -724,7 +740,6 @@ any_space_text = cmds.textField(tx="CUSTOM")
 
 ###### TEXT
 # cmds.setParent (diUi["lays"]["text"])
-
 cmds.button ( label = "Export CHARACTER(S)", backgroundColor=[0.0, 0.4, 0.4], c= export_char )
 
 cmds.button ( label = "Export CUSTOM", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything )
@@ -737,6 +752,7 @@ cmds.text( label= "Select cam if >> ")
 cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.4, 0.4], c= exportBakeCamera )
 
 #############################################################
+
 cmds.setParent (diUi["lays"]["import"])
 # BUTTONS
 cmds.button ( label = "Import and Merge ABC", backgroundColor=[0.0, 0.4, 0.4], c= import_abc)
