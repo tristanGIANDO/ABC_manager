@@ -236,8 +236,16 @@ def exportLindsey(*args):
                 if cmds.checkBox(check_L_groom, q = True, v = True):
                     abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
+
+                #export cloth
+                if cmds.checkBox(check_L_cloth, q = True, v = True):
+                    abc_collider = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    mel.eval(abc_collider)
+                    mel.eval(abc_cloth)
+
                 print ( " I'm exporting the Time Slider ! ")
-                print ( " Lindsey is exported >> MESH, HEAD")
+                
                 print ( " #FightForLindseyBlonde")
             else:
                 #export geo
@@ -249,8 +257,15 @@ def exportLindsey(*args):
                 if cmds.checkBox(check_L_groom, q = True, v = True):
                     abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
+
+                #export cloth
+                if cmds.checkBox(check_L_cloth, q = True, v = True):
+                    abc_collider = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_COLLIDER' + '.abc' + ' ";'
+                    abc_cloth = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_collider + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_CLOTH' + '.abc' + ' ";'
+                    mel.eval(abc_collider)
+                    mel.eval(abc_cloth)
+
                 print ( " I'm exporting the Time Slider ! ")
-                print ( " Lindsey is exported >> MESH, HEAD")
                 print ( " #FightForLindseyBlonde")
 
 ###### EXPORT BRUCE ########################################################################
