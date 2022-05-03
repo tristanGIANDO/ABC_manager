@@ -4,7 +4,7 @@
 # giando.tristan@gmail.com
 
 title = "ABC Manager "
-version = "0.7"
+version = "1.0"
 
 import maya.cmds as cmds
 import os
@@ -16,11 +16,13 @@ bruce = "Bruce"
 lindsey = "Lindsey"
 willis = "Willis"
 willis_red = "WillisRed"
+zodiac = "zodiac"
 bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
 bruce_out_lookdev = os.path.join("bruce_OUT_P_lookdev.ma")
 lindsey_lookdev = os.path.join("Lindsey_P_lookdev.ma")
 willis_lookdev = os.path.join("Willis_P_lookdev.ma")
 willis_red_lookdev = os.path.join("WillisRed_P_lookdev.ma")
+zodiac_lookdev = os.path.join("zodiac_P_lookdev.ma")
 
 # CREATE EXPORT PATH
 scene_name = cmds.file( q =1, sn = 1)
@@ -44,6 +46,9 @@ server = os.path.join(r"\\gandalf/3D4_21_22",
 
 char_path = os.path.join("04_asset",
                         "character")
+
+prop_path = os.path.join("04_asset",
+                        "prop")
 
 shot_path = os.path.join("05_shot") 
 
@@ -83,8 +88,6 @@ shot_list = ["010",
             "100",
             "110"]
 
-bruce_lookdev_path = os.path.join( server,
-                        bruce_lookdev)
 
 bruce_OUT_lookdev_path = os.path.join( server,
                         char_path,
@@ -109,6 +112,12 @@ willis_red_lookdev_path = os.path.join( server,
                         willis_red,
                         scenes_path,
                         willis_red_lookdev)
+
+zodiac_lookdev_path = os.path.join( server,
+                        prop_path,
+                        zodiac,
+                        scenes_path,
+                        zodiac_lookdev)
 
 ###### EXPORT AND BAKE CAMERA ########################################################################
 def exportBakeCamera(*args):
@@ -739,7 +748,7 @@ check_L_geo = cmds.checkBox( label='Lindsey Geo', v=True)
 check_B_geo = cmds.checkBox( label='Bruce Geo', v=True)
 check_L_groom = cmds.checkBox( label='Lindsey Groom', v=True)
 check_B_groom = cmds.checkBox( label='Bruce Groom', v=True)
-check_L_cloth = cmds.checkBox( label='Lindsey Cloth (wip)', v=True)
+check_L_cloth = cmds.checkBox( label='Lindsey Cloth', v=True)
 check_B_mask = cmds.checkBox( label='Bruce Mask', v=True)
 cmds.text(label = "  ")
 check_B_light = cmds.checkBox( label='Bruce Light')
@@ -749,7 +758,7 @@ check_B_emitter = cmds.checkBox( label='Bruce Emitter')
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
 any_space_lbl = cmds.text(label = "Namespace if CUSTOM")
-any_space_text = cmds.textField(tx="CUSTOM")
+any_space_text = cmds.textField(tx="CUSTOM (WIP)")
 
 
 
