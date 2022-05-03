@@ -196,28 +196,43 @@ def exportLindsey(*args):
                 print ( " I'm exporting the current frame ! ")
                 print ( " #FightForLindseyBlonde")
             else:
-                abc_geo = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
-                abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-                for abc in [abc_geo, abc_head]:
-                    mel.eval(abc)
+                #export geo
+                if cmds.checkBox(check_L_geo, q = True, v = True):
+                    abc_geo = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+                    mel.eval(abc_geo)
+               
+                #export groom
+                if cmds.checkBox(check_L_groom, q = True, v = True):
+                    abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    mel.eval(abc_head)
                 print ( " I'm exporting the current frame ! ")
                 print ( " Lindsey is exported >> MESH, HEAD")
                 print ( " #FightForLindseyBlonde")
 
         else:
             if "seq0020" in path:
-                abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
-                abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-                for abc in [abc_geo, abc_head]:
-                    mel.eval(abc)
+                #export geo
+                if cmds.checkBox(check_L_geo, q = True, v = True):
+                    abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+                    mel.eval(abc_geo)
+               
+                #export groom
+                if cmds.checkBox(check_L_groom, q = True, v = True):
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    mel.eval(abc_head)
                 print ( " I'm exporting the Time Slider ! ")
                 print ( " Lindsey is exported >> MESH, HEAD")
                 print ( " #FightForLindseyBlonde")
             else:
-                abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
-                abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-                for abc in [abc_geo, abc_head]:
-                    mel.eval(abc)
+                #export geo
+                if cmds.checkBox(check_L_geo, q = True, v = True):
+                    abc_geo = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + anim + ' ";'
+                    mel.eval(abc_geo)
+               
+                #export groom
+                if cmds.checkBox(check_L_groom, q = True, v = True):
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    mel.eval(abc_head)
                 print ( " I'm exporting the Time Slider ! ")
                 print ( " Lindsey is exported >> MESH, HEAD")
                 print ( " #FightForLindseyBlonde")
