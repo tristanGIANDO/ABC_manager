@@ -151,9 +151,9 @@ def exportBakeCamera(*args):
             print ( " CAMERA is exported >> current frame ") 
         else:
             #BAKE
-            for i in range(start,end):
-                cmds.currentTime(i)
-                cmds.setKeyframe(sel)
+            # for i in range(start,end):
+            #     cmds.currentTime(i)
+            #     cmds.setKeyframe(sel)
             #EXPORT
             command = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + x + ' -file ' + path2 + '/' + 'CAM_' + name + '.abc' + ' ";'
             mel.eval(command)
@@ -796,7 +796,7 @@ bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
 tentacle_UI = cmds.menuItem( label= "TENTACLE" )
-zodiac_UI = cmds.menuItem( label= "ZODIAC (wip)" )
+zodiac_UI = cmds.menuItem( label= "ZODIAC (020 only)" )
 
 all_UI = cmds.checkBox( label = "All Characters", cc = change_vis_checkbox)
 
@@ -848,7 +848,7 @@ cmds.button ( label = "Export CUSTOM (Soon)", backgroundColor=[0.0, 0.4, 0.4], c
 cmds.text(label="")
 cmds.text(label="")
 cmds.text( label= "Select cam if >> ")
-cmds.button ( label = "Export And Bake CAMERA", backgroundColor=[0.0, 0.4, 0.4], c= exportBakeCamera )
+cmds.button ( label = "Export CAMERA", backgroundColor=[0.0, 0.4, 0.4], c= exportBakeCamera )
 
 #############################################################
 
