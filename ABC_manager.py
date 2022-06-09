@@ -22,7 +22,11 @@ willis_red = "WillisRed"
 zodiac = "zodiac"
 bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
 bruce_out_lookdev = os.path.join("bruce_OUT_P_lookdev.ma")
-lindsey_lookdev = os.path.join("Lindsey_P_lookdev.ma")
+lindsey_20 = os.path.join("Lindsey_P_lookdev.ma")
+lindsey_40 = os.path.join("040_Lindsey_P_lookdev.ma")
+lindsey_30_50_70 = os.path.join("Lindsey_IN_01_P_lookdev.ma")
+lindsey_70_to_90 = os.path.join("Lindsey_IN_02_P_lookdev.ma")
+lindsey_90_to_110 = os.path.join("Lindsey_IN_03_P_lookdev.ma")
 willis_lookdev = os.path.join("Willis_P_lookdev.ma")
 willis_red_lookdev = os.path.join("WillisRed_P_lookdev.ma")
 zodiac_lookdev = os.path.join("zodiac_P_lookdev.ma")
@@ -100,11 +104,35 @@ bruce_OUT_lookdev_path = os.path.join( server,
                         scenes_path,
                         bruce_out_lookdev)
 
-lindsey_lookdev_path = os.path.join( server,
+lindsey_lookdev_20_path = os.path.join( server,
                         char_path,
                         lindsey,
                         scenes_path,
-                        lindsey_lookdev)
+                        lindsey_20)
+
+lindsey_lookdev_40_path = os.path.join( server,
+                        char_path,
+                        lindsey,
+                        scenes_path,
+                        lindsey_40)
+
+lindsey_lookdev_50_path = os.path.join( server,
+                        char_path,
+                        lindsey,
+                        scenes_path,
+                        lindsey_30_50_70)
+
+lindsey_lookdev_70_path = os.path.join( server,
+                        char_path,
+                        lindsey,
+                        scenes_path,
+                        lindsey_70_to_90)
+
+lindsey_lookdev_90_path = os.path.join( server,
+                        char_path,
+                        lindsey,
+                        scenes_path,
+                        lindsey_90_to_110)
 
 willis_lookdev_path = os.path.join( server,
                         char_path,
@@ -603,21 +631,46 @@ def import_abc(*args):
                         cache_path)
     
     
-    if "LINDSEY" in character:
-        path_to_lindsey = os.path.join(path,
-                        abc_Lindsey)
+    if "20" in character:
         path_to_lindsey_020 = os.path.join(path_020,
                         abc_Lindsey)
 
+        cmds.file(lindsey_lookdev_20_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+        cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+        print ( "Pray for Lindsey Blonde")
 
-        cmds.file(lindsey_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
 
-        if "020_" in path_to_lindsey:
-            cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-            print ( "Pray for Lindsey Blonde")
-        else:
-            cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-            print ( "Pray for Lindsey Blonde")
+    if "40" in character:
+        path_to_lindsey = os.path.join(path,
+                        abc_Lindsey)
+
+        cmds.file(lindsey_lookdev_40_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+        cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+        print ( "Pray for Lindsey Blonde")
+
+    if "50" in character:
+        path_to_lindsey = os.path.join(path,
+                        abc_Lindsey)
+
+        cmds.file(lindsey_lookdev_50_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+        cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+        print ( "Pray for Lindsey Blonde")
+
+    if "75" in character:
+        path_to_lindsey = os.path.join(path,
+                        abc_Lindsey)
+
+        cmds.file(lindsey_lookdev_70_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+        cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+        print ( "Pray for Lindsey Blonde")
+
+    if "100" in character:
+        path_to_lindsey = os.path.join(path,
+                        abc_Lindsey)
+
+        cmds.file(lindsey_lookdev_90_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
+        cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
+        print ( "Pray for Lindsey Blonde")
 
     if "BRUCE" in character:
         path_to_bruce = os.path.join(path,
