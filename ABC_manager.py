@@ -4,7 +4,7 @@
 # giando.tristan@gmail.com
 
 title = "ABC Manager "
-version = "1.0.1"
+version = "1.1.0"
 
 import maya.cmds as cmds
 import os
@@ -12,7 +12,10 @@ import maya.mel as mel
        
 
 
+'''
+Script to export alembics from animation scenes et import them to render scenes
 
+'''
 
 suffix = "ANIM"
 bruce = "Bruce"
@@ -629,49 +632,36 @@ def import_abc(*args):
                         shot_020_path,
                         shot_name,
                         cache_path)
-    
-    
-    if "20" in character:
-        path_to_lindsey_020 = os.path.join(path_020,
+    #path to lindsey seq 020
+    path_to_lindsey_020 = os.path.join(path_020,
+                        abc_Lindsey)
+    #path to other lindseys
+    path_to_lindsey = os.path.join(path,
                         abc_Lindsey)
 
+
+    #LINDSEY
+    if "OUT" in character:
         cmds.file(lindsey_lookdev_20_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-        print ( "Pray for Lindsey Blonde")
 
-
-    if "40" in character:
-        path_to_lindsey = os.path.join(path,
-                        abc_Lindsey)
-
+    if "TEASER" in character:
         cmds.file(lindsey_lookdev_40_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-        print ( "Pray for Lindsey Blonde")
 
-    if "50" in character:
-        path_to_lindsey = os.path.join(path,
-                        abc_Lindsey)
-
+    if "01" in character:
         cmds.file(lindsey_lookdev_50_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-        print ( "Pray for Lindsey Blonde")
 
-    if "75" in character:
-        path_to_lindsey = os.path.join(path,
-                        abc_Lindsey)
-
+    if "02" in character:
         cmds.file(lindsey_lookdev_70_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-        print ( "Pray for Lindsey Blonde")
 
-    if "100" in character:
-        path_to_lindsey = os.path.join(path,
-                        abc_Lindsey)
-
+    if "03" in character:
         cmds.file(lindsey_lookdev_90_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
-        print ( "Pray for Lindsey Blonde")
 
+    #OTHERS
     if "BRUCE" in character:
         path_to_bruce = os.path.join(path,
                         abc_Bruce)
@@ -846,7 +836,11 @@ for shot in shot_list:
 
 import_menu = cmds.optionMenu( label= "Select Character" , cc = change_vis_menu)
 # ITEMS
-lindsey_lookdev_UI = cmds.menuItem( label= "LINDSEY" )
+lindsey_lookdev_01_UI = cmds.menuItem( label= "LINDSEY OUT" )
+lindsey_lookdev_02_UI = cmds.menuItem( label= "LINDSEY TEASER" )
+lindsey_lookdev_03_UI = cmds.menuItem( label= "LINDSEY UNDERWATER 01" )
+lindsey_lookdev_04_UI = cmds.menuItem( label= "LINDSEY UNDERWATER 02" )
+lindsey_lookdev_05_UI = cmds.menuItem( label= "LINDSEY UNDERWATER 03" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
