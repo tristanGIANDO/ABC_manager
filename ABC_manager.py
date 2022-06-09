@@ -12,6 +12,8 @@ import maya.mel as mel
        
 
 
+
+
 suffix = "ANIM"
 bruce = "Bruce"
 lindsey = "Lindsey"
