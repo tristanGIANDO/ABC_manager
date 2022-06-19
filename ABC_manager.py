@@ -212,6 +212,7 @@ def exportLindsey(*args):
 
     start = cmds.textField(start_frame_UI, query = True, text = True)
     end = cmds.textField(end_frame_UI, query = True, text = True)
+    step = cmds.textField(step_text, query = True, text = True)
     time_slider = str(int(start)) + ' ' + str(int(end))
 
 
@@ -288,9 +289,9 @@ def exportLindsey(*args):
                
                 #export groom
                 if cmds.checkBox(check_L_groom, q = True, v = True):
-                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -step' + str(step) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
-                    abc_braid = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_braid + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_BRAID' + '.abc' + ' ";'
+                    abc_braid = 'AbcExport -j "-frameRange ' + time_slider +  ' -step' + str(step) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_braid + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_BRAID' + '.abc' + ' ";'
                     mel.eval(abc_braid)
 
                 #export cloth
@@ -311,9 +312,9 @@ def exportLindsey(*args):
                
                 #export groom
                 if cmds.checkBox(check_L_groom, q = True, v = True):
-                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -step' + str(0.1) + '-uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -step' + str(step) + '-uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
-                    abc_braid = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_braid + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_BRAID' + '.abc' + ' ";'
+                    abc_braid = 'AbcExport -j "-frameRange ' + time_slider + ' -step' + str(step) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_braid + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_BRAID' + '.abc' + ' ";'
                     mel.eval(abc_braid)
 
                 #export cloth
@@ -893,9 +894,12 @@ cmds.text( label= "  ")
 cmds.separator()
 cmds.separator()
 
-cmds.text(label = "Export Attributes")
+cmds.text(label = "ATTRIBUTES", fn= "boldLabelFont")
+cmds.text(label = "    ")
 
-cmds.text(label = "  ")
+step_lbl = cmds.text(label = "Groom Step")
+step_text = cmds.textField(tx="1")
+
 check_L_geo = cmds.checkBox( label='Lindsey Geo', v=True)
 check_B_geo = cmds.checkBox( label='Bruce Geo', v=True)
 check_L_groom = cmds.checkBox( label='Lindsey Groom', v=True)
@@ -909,8 +913,8 @@ check_B_emitter = cmds.checkBox( label='Bruce Emitter')
 
 tent_space_lbl = cmds.text(label = "Namespace if TENTACLE")
 tent_space_text = cmds.textField(tx="TENT01")
-any_space_lbl = cmds.text(label = "Namespace if CUSTOM", en=False)
-any_space_text = cmds.textField(tx="CUSTOM (WIP)", en=False)
+#any_space_lbl = cmds.text(label = "Namespace if CUSTOM", en=False)
+#any_space_text = cmds.textField(tx="CUSTOM (WIP)", en=False)
 
 
 
@@ -918,7 +922,7 @@ any_space_text = cmds.textField(tx="CUSTOM (WIP)", en=False)
 # cmds.setParent (diUi["lays"]["text"])
 cmds.button ( label = "Export CHARACTER(S)", backgroundColor=[0.0, 0.4, 0.4], c= export_char )
 
-cmds.button ( label = "Export CUSTOM (Soon)", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything, en=False )
+#cmds.button ( label = "Export CUSTOM (Soon)", backgroundColor=[0.0, 0.4, 0.4], c= exportAnything, en=False )
 
 # cmds.setParent (diUi["lays"]["cam"])
 
