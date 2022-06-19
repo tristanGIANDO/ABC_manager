@@ -23,7 +23,7 @@ lindsey = "Lindsey"
 willis = "Willis"
 willis_red = "WillisRed"
 zodiac = "zodiac"
-bruce_lookdev = os.path.join("bruce_P_lookdev.ma")
+bruce_in_lookdev = os.path.join("bruce_IN_P_lookdev.ma")
 bruce_out_lookdev = os.path.join("bruce_OUT_P_lookdev.ma")
 lindsey_20 = os.path.join("Lindsey_P_lookdev.ma")
 lindsey_40 = os.path.join("040_Lindsey_P_lookdev.ma")
@@ -99,7 +99,11 @@ cache_path = os.path.join("maya",
                   
 
 
-
+bruce_IN_lookdev_path = os.path.join( server,
+                        char_path,
+                        bruce,
+                        scenes_path,
+                        bruce_in_lookdev)
 
 bruce_OUT_lookdev_path = os.path.join( server,
                         char_path,
@@ -260,7 +264,7 @@ def exportLindsey(*args):
                
                 #export groom
                 if cmds.checkBox(check_L_groom, q = True, v = True):
-                    abc_head = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_head = 'AbcExport -j "-frameRange ' + current_frame + '-uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
                     abc_braid = 'AbcExport -j "-frameRange ' + current_frame + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_braid + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_BRAID' + '.abc' + ' ";'
                     mel.eval(abc_braid)
@@ -307,7 +311,7 @@ def exportLindsey(*args):
                
                 #export groom
                 if cmds.checkBox(check_L_groom, q = True, v = True):
-                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + ' -step' + str(0.1) + '-uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
                     mel.eval(abc_head)
                     abc_braid = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_braid + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_BRAID' + '.abc' + ' ";'
                     mel.eval(abc_braid)
@@ -641,7 +645,7 @@ def import_abc(*args):
 
 
     #LINDSEY
-    if "OUT" in character:
+    if "LINDSEY OUT" in character:
         cmds.file(lindsey_lookdev_20_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey_020), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
 
@@ -649,20 +653,20 @@ def import_abc(*args):
         cmds.file(lindsey_lookdev_40_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
 
-    if "01" in character:
+    if "30" in character:
         cmds.file(lindsey_lookdev_50_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
 
-    if "02" in character:
+    if "75" in character:
         cmds.file(lindsey_lookdev_70_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
 
-    if "03" in character:
+    if "100" in character:
         cmds.file(lindsey_lookdev_90_path, r=True, ignoreVersion = True, namespace = "CHAR01") # Reference Lindsey Lookdev
         cmds.AbcImport(str(path_to_lindsey), mode='import', connect= "CHAR01:Lindsey_P_geoHi:Lindsey_MESH") # Merge ABC
 
     #OTHERS
-    if "BRUCE" in character:
+    if "BRUCE OUT" in character:
         path_to_bruce = os.path.join(path,
                         abc_Bruce)
         path_to_light = os.path.join(path,
@@ -681,6 +685,29 @@ def import_abc(*args):
         else :
             cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
             cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
+        
+        try:
+            disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
+            cmds.matchTransform(disk_light,"CHAR02:CTRL_Light")
+            cmds.parent(disk_light, "CHAR02:CTRL_Light")
+
+            cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.light_intensity" ,"TORCHE_light.intensity") # Connect intensity
+            cmds.connectAttr("CHAR02:Bruce_P_geoHi:Bruce_headShape.ConeAngle" ,"TORCHE_light.coneAngle") # Connect intensity
+
+            print ( "done" )
+        except:
+            print (" no light" )
+
+    if "BRUCE IN" in character:
+        path_to_bruce = os.path.join(path,
+                        abc_Bruce)
+        path_to_light = os.path.join(path,
+                        abc_Bruce_light)
+
+        cmds.file(bruce_IN_lookdev_path, r=True, ignoreVersion = True, namespace = "CHAR02") # Reference Bruce Lookdev
+
+        cmds.AbcImport(str(path_to_bruce), mode='import', connect= "CHAR02:Bruce_P_geoHi:Bruce_MESH") # Merge ABC
+        cmds.AbcImport(str(path_to_light), mode='import') #Import CTRL Light
         
         try:
             disk_light = cmds.shadingNode("PxrDiskLight", asLight=True, n= "TORCHE_light") #Create Light
@@ -838,9 +865,10 @@ import_menu = cmds.optionMenu( label= "Select Character" , cc = change_vis_menu)
 # ITEMS
 lindsey_lookdev_01_UI = cmds.menuItem( label= "LINDSEY OUT" )
 lindsey_lookdev_02_UI = cmds.menuItem( label= "LINDSEY TEASER" )
-lindsey_lookdev_03_UI = cmds.menuItem( label= "LINDSEY UNDERWATER 01" )
-lindsey_lookdev_04_UI = cmds.menuItem( label= "LINDSEY UNDERWATER 02" )
-lindsey_lookdev_05_UI = cmds.menuItem( label= "LINDSEY UNDERWATER 03" )
+lindsey_lookdev_03_UI = cmds.menuItem( label= "LINDSEY 30 50 70" )
+lindsey_lookdev_04_UI = cmds.menuItem( label= "LINDSEY 75 80 85" )
+lindsey_lookdev_05_UI = cmds.menuItem( label= "LINDSEY 90 100 110" )
+bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE IN" )
 bruce_out_lookdev_UI = cmds.menuItem( label= "BRUCE OUT" )
 willis_lookdev_UI = cmds.menuItem( label= "WILLIS WHITE" )
 willis_red_lookdev_UI = cmds.menuItem( label= "WILLIS RED" )
