@@ -4,7 +4,7 @@
 # giando.tristan@gmail.com
 
 title = "ABC Manager "
-version = "1.1.0"
+version = "1.2.0"
 
 import maya.cmds as cmds
 import os
