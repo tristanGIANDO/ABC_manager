@@ -342,6 +342,8 @@ def exportBruce(*args):
     start = cmds.textField(start_frame_UI, query = True, text = True)
     end = cmds.textField(end_frame_UI, query = True, text = True)
     time_slider = str(int(start)) + ' ' + str(int(end))
+
+    step = cmds.textField(step_text, query = True, text = True)
     
     #REPATH TO CACHE
     if "scenes" in path:
@@ -410,8 +412,8 @@ def exportBruce(*args):
                     abc_geo = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
                     mel.eval(abc_geo)
                 if cmds.checkBox(check_B_groom, q = True, v = True): #export head + arms
-                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-                    abc_arms = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -step' + str(step) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_arms = 'AbcExport -j "-frameRange ' + time_slider + ' -step' + str(step) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2_020 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
                     mel.eval(abc_head)
                     mel.eval(abc_arms)
                 if cmds.checkBox(check_B_light, q = True, v = True): # export light
@@ -429,8 +431,8 @@ def exportBruce(*args):
                     abc_geo = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_geo + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_' + suffix + '.abc' + ' ";'
                     mel.eval(abc_geo)
                 if cmds.checkBox(check_B_groom, q = True, v = True): #export head + arms
-                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
-                    abc_arms = 'AbcExport -j "-frameRange ' + time_slider + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
+                    abc_head = 'AbcExport -j "-frameRange ' + time_slider + attr_of_the_light + ' -step' + str(step) + ' -uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_head + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_HEAD' + '.abc' + ' ";'
+                    abc_arms = 'AbcExport -j "-frameRange ' + time_slider +  ' -step' + str(step) + '-uvWrite -worldSpace -writeVisibility -writeUVSets -dataFormat ogawa -root ' + char_space + ':' + char_arms + ' -file ' + path2 + '/' + 'maya' + '/' + 'cache' + '/' + shot_name + '_' + char_space + '_ARMS' + '.abc' + ' ";'
                     mel.eval(abc_head)
                     mel.eval(abc_arms)
                 if cmds.checkBox(check_B_light, q = True, v = True): # export light
