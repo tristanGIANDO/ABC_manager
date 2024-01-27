@@ -1,3 +1,7 @@
+## *This tool has not been developed since 2022.*
+Today, I don't code the same way at all, but the idea of creating a new alembic exporter is still there.
+(See SPIDER)
+
 # ABC_manager
 This tool allows to export in .abc characters, cameras or selections animations, or import and merge them with their lookdev version.
 
